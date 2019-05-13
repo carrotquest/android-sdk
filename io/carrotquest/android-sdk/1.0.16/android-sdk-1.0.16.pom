@@ -181,15 +181,5 @@
       <artifactId>topsnackbar</artifactId>
       <version>1.1.1</version>
     </dependency>
-    <dependency>
-      <groupId>cqandroid_sdk</groupId>
-      <artifactId>cqandroid_lib</artifactId>
-      <version>unspecified</version>
-    </dependency>
-    <dependency>
-      <groupId>cqandroid_sdk</groupId>
-      <artifactId>imagepicker</artifactId>
-      <version>unspecified</version>
-    </dependency>
   </dependencies>
 </project>
