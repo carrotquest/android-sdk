@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>io.carrotquest</groupId>
-  <artifactId>imagepicker</artifactId>
+  <artifactId>image-picker</artifactId>
   <versioning>
     <release>1.0.0-release</release>
     <versions>
       <version>1.0.0-debug</version>
       <version>1.0.0-release</version>
     </versions>
-    <lastUpdated>20190515061454</lastUpdated>
+    <lastUpdated>20190515102223</lastUpdated>
   </versioning>
 </metadata>

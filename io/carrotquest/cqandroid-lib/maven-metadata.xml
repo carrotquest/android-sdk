@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>io.carrotquest</groupId>
-  <artifactId>cqandroid_lib</artifactId>
+  <artifactId>cqandroid-lib</artifactId>
   <versioning>
     <release>1.0.0-usRelease</release>
     <versions>
@@ -10,6 +10,6 @@
       <version>1.0.0-usDebug</version>
       <version>1.0.0-usRelease</version>
     </versions>
-    <lastUpdated>20190515093500</lastUpdated>
+    <lastUpdated>20190515102030</lastUpdated>
   </versioning>
 </metadata>
