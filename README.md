@@ -12,9 +12,8 @@ allprojects {
     ...
     repositories {
         ...
-        maven {
-            url "https://raw.github.com/carrotquest/android-sdk/beta"
-        }
+        maven { url "https://raw.github.com/carrotquest/android-sdk/beta" }
+        maven { url "https://jitpack.io" }
     }
 }
 ```
@@ -31,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.3'
+    implementation 'io.carrotquest:android-sdk:1.0.3-commonRelease'
 }
 ```
 
