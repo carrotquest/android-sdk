@@ -185,7 +185,7 @@ public void setLocationFAB(LocationFAB location)
  ```
  
  ### Уведомления
- Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан здесь - https://firebase.google.com/docs/cloud-messaging?authuser=0
+ Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан [здесь](https://firebase.google.com/docs/cloud-messaging?authuser=0)
  
  Иконку уведомлений можно настравивать используя метод 
  ``` java
