@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.3-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.5-commonRelease'
 }
 ```
 
@@ -82,14 +82,14 @@ Carrot.setUserProperty(userPropertyList);
 public UserProperty(String key, String value)
 public UserProperty(Operation operation, String key, String value)
 ```
-Более подробно про `Operations` можно прочитать в разделе [«Cвойства пользователя»](/props#_3).
+Более подробно про `Operations` можно прочитать в разделе [«Cвойства пользователя»](https://carrotquest.io/developers/props/#_3).
 
 `Внимание!`
 
 Поле `key` не может начинаться с символа `$`.
 
 
-Для установки [системных свойств](/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUProperty`.
+Для установки [системных свойств](https://carrotquest.io/developers/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUProperty`.
 
 Для отслеживания событий используйте
 ```java
@@ -185,7 +185,7 @@ public void setLocationFAB(LocationFAB location)
  ```
  
  ### Уведомления
- Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан здесь - https://firebase.google.com/docs/cloud-messaging?authuser=0
+ Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан [здесь](https://firebase.google.com/docs/cloud-messaging?authuser=0)
  
  Иконку уведомлений можно настравивать используя метод 
  ``` java
