@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.6-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.8-commonRelease'
 }
 ```
 
@@ -106,7 +106,7 @@ Carrot.trackEvent(eventName, eventParams);
 ### Плавающая кнопка (Floating Button)
 По своей сути - это элемент интерфейса, наследующийся от `ConstraintLayout`. Вы можете встроить его в свою разметку:
 ``` xml
-<io.carrotquest_sdk.android.ui.FloatingButton
+<io.carrotquest_sdk.android.ui.fab.FloatingButton
         android:id="@+id/cq_sdk_float_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
