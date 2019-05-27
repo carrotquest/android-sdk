@@ -12,7 +12,7 @@ allprojects {
     ...
     repositories {
         ...
-        maven { url "https://raw.github.com/dashly/android-sdk/beta_en" }
+        maven { url "https://raw.github.com/dashly/android-sdk/beta_us" }
         maven { url "https://jitpack.io" }
     }
 }
