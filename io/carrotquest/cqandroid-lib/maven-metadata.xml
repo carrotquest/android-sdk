@@ -3,13 +3,17 @@
   <groupId>io.carrotquest</groupId>
   <artifactId>cqandroid-lib</artifactId>
   <versioning>
-    <release>1.0.0-usRelease</release>
+    <release>1.0.1-usRelease</release>
     <versions>
       <version>1.0.0-commonDebug</version>
       <version>1.0.0-commonRelease</version>
       <version>1.0.0-usDebug</version>
       <version>1.0.0-usRelease</version>
+      <version>1.0.1-commonDebug</version>
+      <version>1.0.1-commonRelease</version>
+      <version>1.0.1-usDebug</version>
+      <version>1.0.1-usRelease</version>
     </versions>
-    <lastUpdated>20190515102030</lastUpdated>
+    <lastUpdated>20190527053041</lastUpdated>
   </versioning>
 </metadata>
