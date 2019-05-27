@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.dashly:android-sdk:1.0.8-commonRelease'
+    implementation 'io.dashly:android-sdk:1.0.8-usRelease'
 }
 ```
 
