@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.10-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.5-commonRelease'
 }
 ```
 
@@ -68,7 +68,10 @@ Carrot.isDebug(true);
 ```java
 Carrot.auth(userId, userAuthKey);
 ```
-
+или
+```java
+Carrot.auth(userId, userAuthKey, callback)
+```
 ## Свойства пользователей и события
 
 Вы можете установить необходимые свойства пользователя с помощью
@@ -106,7 +109,7 @@ Carrot.trackEvent(eventName, eventParams);
 ### Плавающая кнопка (Floating Button)
 По своей сути - это элемент интерфейса, наследующийся от `ConstraintLayout`. Вы можете встроить его в свою разметку:
 ``` xml
-<io.carrotquest_sdk.android.ui.fab.FloatingButton
+<io.carrotquest_sdk.android.ui.FloatingButton
         android:id="@+id/cq_sdk_float_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -163,7 +166,7 @@ public void setIconFAB(Drawable iconFAB)
 
 ``` java
 /**
- * Установить отступы кноки от краев экрана
+ * Установить отступы кнопки от краев экрана
  * @param margin Значение отступа
  */
 public void setMarginFAB(int margin) 
@@ -180,15 +183,30 @@ public void setLocationFAB(LocationFAB location)
 
 ### Открытие чата из произвольного места
 Открыть чат можно также, вызвав из произвольного места (после инициализации) следующий код:
- ```java
- Carrot.openChat(context);
- ```
- 
- ### Уведомления
- Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан [здесь](https://firebase.google.com/docs/cloud-messaging?authuser=0)
- 
- Иконку уведомлений можно настравивать используя метод 
- ``` java
+```java
+Carrot.openChat(context);
+```
+
+### Уведомления
+Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан [здесь](https://firebase.google.com/docs/cloud-messaging?authuser=0)
+
+Если вы уже используете сервис Firebase Cloud Messaging для своих push-уведомлений, то для корректной работы push-уведомлений в SDK необходимо отредактировать вашу службу FirebaseMessagingService. Это необходимо для "прокидывания" наших сообщений внутрь SDK. Пример:
+``` java
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    @Override
+    public void onMessageReceived (RemoteMessage remoteMessage) {
+        Map<String, String> data = remoteMessage.getData();
+        if (data.containsKey(NotificationsConstants.CQ_SDK_PUSH) && "true".equals(data.get(NotificationsConstants.CQ_SDK_PUSH))) {
+            Carrot.sendFirebaseNotification(remoteMessage);
+        } else {
+            //Your code
+        }
+    }
+}
+```
+
+Иконку уведомлений можно устанавливать используя метод:
+``` java
 Carrot.setNotificationIcon(notificationIconId)
 ```
 где `notificationIconId` - это идентификатор ресурса иконки.
