@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.dashly:android-sdk:1.0.10-usRelease'
+    implementation 'io.dashly:android-sdk:1.0.11-usRelease'
 }
 ```
 
@@ -53,12 +53,12 @@ You'll need API Key and User Auth Key to work with Dashly for Android. Those can
 You should run this code in your application's onCreate() method in order to initialize Dashly:
 
 ```java
-Dashly.setup(this, apiKey);
+Carrot.setup(this, apiKey);
 ```
 
 Use this method to display additional info during debug process:
 ```java
-Dashly.isDebug(true);
+Carrot.isDebug(true);
 ```
 
 ## User authorization
@@ -66,15 +66,19 @@ Dashly.isDebug(true);
 In case your application has user authorization, you might want to send user id to Dashly:
 
 ```java
-Dashly.auth(userId, userAuthKey);
+Carrot.auth(userId, userAuthKey);
+```
+or
+```java
+Carrot.auth(userId, userAuthKey, callback)
 ```
 
 ## User properties and events
 
 You can set user properties, using this method:
 ```java
-Dashly.setUserProperty(userProperty);
-Dashly.setUserProperty(userPropertyList);
+Carrot.setUserProperty(userProperty);
+Carrot.setUserProperty(userPropertyList);
 ```
 
 `UserProperty` class should be used for user properties description
@@ -89,15 +93,15 @@ More info on `Operations` can be found in [«User properties»](/props#_3) secti
 `key` field value should not start with `$`.
 
 
-`DashlyUserProperty` and `EcommerceUProperty` classes should be used to set [system properties](/props#_4)
+`CarrotUserProperty` and `EcommerceUProperty` classes should be used to set [system properties](/props#_4)
 
 Use the following method for events tracking:
 ```java
-Dashly.trackEvent(eventName);
+Carrot.trackEvent(eventName);
 ```
 You can send additional event parameters as JSON string
 ```java
-Dashly.trackEvent(eventName, eventParams);
+Carrot.trackEvent(eventName, eventParams);
 ```
 
 ## Live chat
@@ -107,7 +111,7 @@ openning method at desired moment.
 ### Floating Button
 This is an interface element inherited from `ConstraintLayout`. You can embed it in your markup:
 ``` xml
-<io.dashly_sdk.android.ui.fab.FloatingButton
+<io.carrot_sdk.android.ui.fab.FloatingButton
         android:id="@+id/cq_sdk_float_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -182,7 +186,7 @@ public void setLocationFAB(LocationFAB location)
 ### Open chat from anywhere
 After initialization you can open chat from any place using thix method:
 ```java
-Dashly.openChat(context);
+Carrot.openChat(context);
 ```
 
 ### Notofications
@@ -190,6 +194,6 @@ SDK uses Firebase Cloud Messaging for sending notifications. At the moment you a
 
 You can setup notifications icon using this method
 ``` java
-Dashly.setNotificationIcon(notificationIconId)
+Carrot.setNotificationIcon(notificationIconId)
 ```
 `notificationIconId` - icon source id.
