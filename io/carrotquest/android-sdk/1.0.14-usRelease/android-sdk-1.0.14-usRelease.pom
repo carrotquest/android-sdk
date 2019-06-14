@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.carrotquest</groupId>
   <artifactId>android-sdk</artifactId>
-  <version>1.0.14-usDebug</version>
+  <version>1.0.14-usRelease</version>
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
