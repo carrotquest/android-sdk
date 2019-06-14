@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.12-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.14-commonRelease'
 }
 ```
 
@@ -101,6 +101,10 @@ Carrot.trackEvent(eventName);
 Вы можете указать дополнительные параметры для события в виде JSON-строки и передать их в метод
 ```java
 Carrot.trackEvent(eventName, eventParams);
+```
+Вы можете получить список идентификаторов непрочитанных на данный момент диалогов
+```java
+ Carrot.getUnreadConversations();
 ```
 
 ## Чат с оператором
@@ -210,3 +214,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 Carrot.setNotificationIcon(notificationIconId)
 ```
 где `notificationIconId` - это идентификатор ресурса иконки.
+
+Если вы хотите из любого места вашего приложения получать информацию о новых сообщениях в SDK, то вы можете реализовать BroadcastReceiver. Пример реализации:
+```java
+public class MyNewMessageBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if(intent.hasExtra(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ARG)) {
+            IncomingMessage incomingMessage = (IncomingMessage) intent.getSerializableExtra(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ARG);
+            if (incomingMessage != null) {
+                Toast.makeText(context, incomingMessage.getText(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+}
+```
+`IncomingMessage` - класс, который описывает входящее сообщение.
+
+Далее нужно зарегистрировать его:
+``` java
+MyNewMessageBroadcastReceiver messageReceiver = new MyNewMessageBroadcastReceiver();
+IntentFilter filter = new IntentFilter();
+filter.addAction(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ACTION);
+registerReceiver(messageReceiver, filter);
+```
