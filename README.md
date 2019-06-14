@@ -55,10 +55,14 @@ android {
 ```java
 Carrot.setup(this, apiKey);
 ```
+или
+```java
+Carrot.setup(this, apiKey, callback)
+```
 
 Для вывода дополнительной информации во время отладки используйте метод:
 ```java
-Carrot.isDebug(true);
+Carrot.setDebug(true);
 ```
 
 ## Авторизация пользователей
