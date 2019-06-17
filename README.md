@@ -12,7 +12,7 @@ allprojects {
     ...
     repositories {
         ...
-        maven { url "https://raw.github.com/dashly/android-sdk/beta_us" }
+        maven { url "https://raw.github.com/carrotquest/android-sdk/beta_us" }
         maven { url "https://jitpack.io" }
     }
 }
@@ -30,7 +30,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.dashly:android-sdk:1.0.15-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.15-usRelease'
 }
 ```
 
