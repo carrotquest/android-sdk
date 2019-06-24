@@ -10,6 +10,10 @@
       <version>1.0.7-usDebug</version>
       <version>1.0.7-usRelease</version>
     </versions>
+<<<<<<< HEAD
     <lastUpdated>20190624092605</lastUpdated>
+=======
+    <lastUpdated>20190624085737</lastUpdated>
+>>>>>>> 4f281b5dedb5c9f17d6bd618e56c838a577fbe30
   </versioning>
 </metadata>
