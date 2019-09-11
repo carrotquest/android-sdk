@@ -25,12 +25,15 @@ android {
         ...
         multiDexEnabled true
     }
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+    }
 }
 
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.dashly:android-sdk:1.0.19-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.20-usRelease'
 }
 ```
 
@@ -53,12 +56,12 @@ You'll need API Key and User Auth Key to work with Dashly for Android. Those can
 You should run this code in your application's onCreate() method in order to initialize Dashly:
 
 ```java
-Carrot.setup(this, apiKey);
+Dasly.setup(this, apiKey);
 ```
 
 Use this method to display additional info during debug process:
 ```java
-Carrot.isDebug(true);
+Dasly.isDebug(true);
 ```
 
 ## User authorization
@@ -66,19 +69,19 @@ Carrot.isDebug(true);
 In case your application has user authorization, you might want to send user id to Dashly:
 
 ```java
-Carrot.auth(userId, userAuthKey);
+Dasly.auth(userId, userAuthKey);
 ```
 or
 ```java
-Carrot.auth(userId, userAuthKey, callback)
+Dasly.auth(userId, userAuthKey, callback)
 ```
 
 ## User properties and events
 
 You can set user properties, using this method:
 ```java
-Carrot.setUserProperty(userProperty);
-Carrot.setUserProperty(userPropertyList);
+Dasly.setUserProperty(userProperty);
+Dasly.setUserProperty(userPropertyList);
 ```
 
 `UserProperty` class should be used for user properties description
@@ -97,11 +100,11 @@ More info on `Operations` can be found in [«User properties»](/props#_3) secti
 
 Use the following method for events tracking:
 ```java
-Carrot.trackEvent(eventName);
+Dasly.trackEvent(eventName);
 ```
 You can send additional event parameters as JSON string
 ```java
-Carrot.trackEvent(eventName, eventParams);
+Dasly.trackEvent(eventName, eventParams);
 ```
 
 ## Live chat
@@ -186,7 +189,7 @@ public void setLocationFAB(LocationFAB location)
 ### Open chat from anywhere
 After initialization you can open chat from any place using thix method:
 ```java
-Carrot.openChat(context);
+Dasly.openChat(context);
 ```
 
 ### Notofications
@@ -194,6 +197,6 @@ SDK uses Firebase Cloud Messaging for sending notifications. At the moment you a
 
 You can setup notifications icon using this method
 ``` java
-Carrot.setNotificationIcon(notificationIconId)
+Dasly.setNotificationIcon(notificationIconId)
 ```
 `notificationIconId` - icon source id.
