@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.20-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.21-commonRelease'
 }
 ```
 
@@ -128,6 +128,8 @@ Carrot.trackEvent(eventName, eventParams);
         app:cq_visibility_background="false"
         app:cq_icon_fab="@drawable/ic_send"
         app:cq_margin_fab="8dp"
+        app:cq_show_social_labels="false"
+        app:cq_auto_hide_fab="true"
 />
 ```
 У этого элемента есть свои атрибуты: 
@@ -135,6 +137,8 @@ Carrot.trackEvent(eventName, eventParams);
 * `app:cq_visibility_background` отвечает за видимость эффекта затемнения при нажатии на плавающую кнопку. По умолчанию `true`. 
 * `app:cq_icon_fab` задаёт иконку плавающей кнопки. По умолчанию `@id/ic_cq_message`.
 * `app:cq_margin_fab` задаёт отступы плавающей кнопки относительно своего родительского контейнера. По умолчанию `16dp`.
+* `app:cq_show_social_labels` отвечает за видимость надписей рядом с иконками социальных сетей. По умолчанию `true`
+* `app:cq_auto_hide_fab` отвечает за автоматическое скрытие кнопки чата когда интернет не доступен. По умолчанию `false`
 
 #### Интерфейс плавающей кнопки
 Доступные методы для настройки и управления поведением плавающей кнопки.
