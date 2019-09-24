@@ -50,7 +50,7 @@ android {
 
 
 ## Initialization
-You'll need API Key and User Auth Key to work with Dashly for Android. Those can be found on Settings - API Keys tab:
+You'll need API Key and User Auth Key to work with Dashly for Android. Those can be found on Settings - Developers tab:
 ![Api keys](/img/dashly_api_keys.png)
 
 You should run this code in your application's onCreate() method in order to initialize Dashly:
@@ -124,9 +124,9 @@ This is an interface element inherited from `ConstraintLayout`. You can embed it
         app:cq_margin_fab="8dp"
 />
 ```
-This element has it's own attributes: 
+This element has it's own attributes:
     `app:cq_location_fab` controls button location inside parent element. 4 options are available - `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`. Default - `BOTTOM_RIGHT`.
-    `app:cq_visibility_background` controlls fogging effect visibility on floating button tap. Default `true`. 
+    `app:cq_visibility_background` controlls fogging effect visibility on floating button tap. Default `true`.
     `app:cq_icon_fab` floating button icon. Default `@id/ic_cq_message`.
     `app:cq_margin_fab` controls floating button margins (inside parent element). Default `16dp`.
 
@@ -174,7 +174,7 @@ public void setIconFAB(Drawable iconFAB)
  * Set button margins (from screen borders)
  * @param margin Margin value
  */
-public void setMarginFAB(int margin) 
+public void setMarginFAB(int margin)
 ```
 
 ``` java
