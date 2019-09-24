@@ -122,13 +122,17 @@ This is an interface element inherited from `ConstraintLayout`. You can embed it
         app:cq_visibility_background="false"
         app:cq_icon_fab="@drawable/ic_send"
         app:cq_margin_fab="8dp"
+        app:cq_show_social_labels="false"
+        app:cq_auto_hide_fab="true"
 />
 ```
-This element has it's own attributes:
-    `app:cq_location_fab` controls button location inside parent element. 4 options are available - `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`. Default - `BOTTOM_RIGHT`.
-    `app:cq_visibility_background` controlls fogging effect visibility on floating button tap. Default `true`.
-    `app:cq_icon_fab` floating button icon. Default `@id/ic_cq_message`.
-    `app:cq_margin_fab` controls floating button margins (inside parent element). Default `16dp`.
+This element has the following attributes:
+* `app:cq_location_fab` controls button location inside parent element. 4 options are available - `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`.  `BOTTOM_RIGHT` by default.
+* `app:cq_visibility_background` controlls fogging effect visibility on floating button tap. `true` by default.
+* `app:cq_icon_fab` floating button icon. `@id/ic_cq_message` by default.
+* `app:cq_margin_fab` controls floating button margins (inside parent element). `16dp` by default    
+* `app:cq_show_social` labels is responsible for text labels near the social network buttons. True by default.
+* `app:cq_auto_hide_fab` is responsible for automatic hiding of chat widget when there is no internet connection. False by default.
 
 #### Floating button interface
 Available floating button behaviour configuration and control methods.
