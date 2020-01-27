@@ -51,7 +51,7 @@ android {
 
 ## Initialization
 You'll need API Key and User Auth Key to work with Dashly for Android. Those can be found on Settings - Developers tab:
-![Api keys](/img/dashly_api_keys.png)
+![Api keys](https://github.com/carrotquest/android-sdk/blob/beta_us/img/dashly_api_keys.png?raw=true)
 
 You should run this code in your application's onCreate() method in order to initialize Dashly:
 
