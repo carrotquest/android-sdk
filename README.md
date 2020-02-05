@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.25-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.26-usRelease'
 }
 ```
 
@@ -130,7 +130,7 @@ This element has the following attributes:
 * `app:cq_location_fab` controls button location inside parent element. 4 options are available - `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`.  `BOTTOM_RIGHT` by default.
 * `app:cq_visibility_background` controlls fogging effect visibility on floating button tap. `true` by default.
 * `app:cq_icon_fab` floating button icon. `@id/ic_cq_message` by default.
-* `app:cq_margin_fab` controls floating button margins (inside parent element). `16dp` by default    
+* `app:cq_margin_fab` controls floating button margins (inside parent element). `16dp` by default
 * `app:cq_show_social` labels is responsible for text labels near the social network buttons. True by default.
 * `app:cq_auto_hide_fab` is responsible for automatic hiding of chat widget when there is no internet connection. False by default.
 
@@ -199,8 +199,9 @@ Dasly.openChat(context);
 ### Notofications
 SDK uses Firebase Cloud Messaging for sending notifications. At the moment you are required to get a key and send it to our support. Cloud Messaging setup is described [here](https://firebase.google.com/docs/cloud-messaging?authuser=0)
 
-You can setup notifications icon using this method
-``` java
-Dasly.setNotificationIcon(notificationIconId)
+Icon and new message notifications color can be altered.
+Name your icon `ic_cq_notification.xml` and put it into `res/drawable` directory to add the icon into notifications.
+Add `colorCqNotify` named color of required value into your resource file to setup notifications color:
+``` xml
+ <color name="colorCqNotify">#EF7F28</color>
 ```
-`notificationIconId` - icon source id.
