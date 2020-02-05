@@ -51,7 +51,7 @@ android {
 
 ## Инициализация
 Для работы с Carrot quest для Android вам понадобится API Key и User Auth Key. Вы можете найти эти ключи на вкладке Настройки > Разработчикам:
-![Api keys](img/carrot_api_keys.png)
+![Api keys](https://github.com/carrotquest/android-sdk/blob/beta/img/carrot_api_keys.png?raw=true)
 
 Для инициализации Carrot quest вам нужно выполнить следующий код в методе onCreate() вашего приложения:
 
