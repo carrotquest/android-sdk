@@ -79,6 +79,14 @@ Carrot.auth(userId, userAuthKey);
 ```java
 Carrot.auth(userId, userAuthKey, callback)
 ```
+
+Чтобы сменить пользователя, нужно сначала вызвать метод деинициализации:
+```java
+Carrot.deInit()
+```
+а после завново вызвать методы ининциализации и (опциональьно) авторизации.
+
+
 ## Свойства пользователей и события
 
 Вы можете установить необходимые свойства пользователя с помощью
@@ -132,9 +140,9 @@ Carrot.trackEvent(eventName, eventParams);
         app:cq_auto_hide_fab="true"
 />
 ```
-У этого элемента есть свои атрибуты: 
+У этого элемента есть свои атрибуты:
 * `app:cq_location_fab` отвечает за расположение плавающей кнопки относительно её родительского контейнера. Возможны 4 варианта - `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`. По умолчанию `BOTTOM_RIGHT`.
-* `app:cq_visibility_background` отвечает за видимость эффекта затемнения при нажатии на плавающую кнопку. По умолчанию `true`. 
+* `app:cq_visibility_background` отвечает за видимость эффекта затемнения при нажатии на плавающую кнопку. По умолчанию `true`.
 * `app:cq_icon_fab` задаёт иконку плавающей кнопки. По умолчанию `@id/ic_cq_message`.
 * `app:cq_margin_fab` задаёт отступы плавающей кнопки относительно своего родительского контейнера. По умолчанию `16dp`.
 * `app:cq_show_social_labels` отвечает за видимость надписей рядом с иконками социальных сетей. По умолчанию `true`
@@ -184,7 +192,7 @@ public void setIconFAB(Drawable iconFAB)
  * Установить отступы кнопки от краев экрана
  * @param margin Значение отступа
  */
-public void setMarginFAB(int margin) 
+public void setMarginFAB(int margin)
 ```
 
 ``` java
@@ -220,11 +228,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 }
 ```
 
-Иконку уведомлений можно устанавливать используя метод:
-``` java
-Carrot.setNotificationIcon(notificationIconId)
+Иконку и цвет уведомлений о новых сообщениях можно изменить.
+Для установки иконки на уведомления добавьте иконку с названием `ic_cq_notification.xml` в директорию `res/drawable`.
+Для установки цвета уведомлений в файл ресурсов пропишите цвет с названием `colorCqNotify` и нужным вам значением:
+``` xml
+ <color name="colorCqNotify">#EF7F28</color>
 ```
-где `notificationIconId` - это идентификатор ресурса иконки.
 
 Если вы хотите из любого места вашего приложения получать информацию о новых сообщениях в SDK, то вы можете реализовать BroadcastReceiver. Пример реализации:
 ```java
