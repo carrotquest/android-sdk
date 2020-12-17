@@ -3,49 +3,13 @@
   <groupId>io.carrotquest</groupId>
   <artifactId>cqandroid-lib</artifactId>
   <versioning>
-    <release>1.0.20-usRelease</release>
+    <release>1.0.21-usRelease</release>
     <versions>
-      <version>1.0.15-commonDebug</version>
-      <version>1.0.15-commonRelease</version>
-      <version>1.0.15-usDebug</version>
-      <version>1.0.15-usRelease</version>
-      <version>1.0.16-commonDebug</version>
-      <version>1.0.16-commonRelease</version>
-      <version>1.0.16-usDebug</version>
-      <version>1.0.16-usRelease</version>
-      <version>1.0.17-commonDebug</version>
-      <version>1.0.17-commonRelease</version>
-      <version>1.0.17-usDebug</version>
-      <version>1.0.17-usRelease</version>
-      <version>1.0.18-commonDebug</version>
-      <version>1.0.18-commonRelease</version>
-      <version>1.0.18-usDebug</version>
-      <version>1.0.18-usRelease</version>
-      <version>1.0.17_test_zoom_sdk-commonDebug</version>
-      <version>1.0.17_test_zoom_sdk-commonRelease</version>
-      <version>1.0.17_test_zoom_sdk-usDebug</version>
-      <version>1.0.17_test_zoom_sdk-usRelease</version>
-      <version>1.0.18_test_zoom_sdk-commonDebug</version>
-      <version>1.0.18_test_zoom_sdk-commonRelease</version>
-      <version>1.0.18_test_zoom_sdk-usDebug</version>
-      <version>1.0.18_test_zoom_sdk-usRelease</version>
-      <version>1.0.19-commonDebug</version>
-      <version>1.0.19-commonRelease</version>
-      <version>1.0.19-usDebug</version>
-      <version>1.0.19-usRelease</version>
-      <version>1.0.19_test_1-commonDebug</version>
-      <version>1.0.19_test_1-commonRelease</version>
-      <version>1.0.19_test_1-usDebug</version>
-      <version>1.0.19_test_1-usRelease</version>
-      <version>1.0.19_test_2-commonDebug</version>
-      <version>1.0.19_test_2-commonRelease</version>
-      <version>1.0.19_test_2-usDebug</version>
-      <version>1.0.19_test_2-usRelease</version>
-      <version>1.0.20-commonDebug</version>
-      <version>1.0.20-commonRelease</version>
-      <version>1.0.20-usDebug</version>
-      <version>1.0.20-usRelease</version>
+      <version>1.0.21-commonDebug</version>
+      <version>1.0.21-commonRelease</version>
+      <version>1.0.21-usDebug</version>
+      <version>1.0.21-usRelease</version>
     </versions>
-    <lastUpdated>20201019111529</lastUpdated>
+    <lastUpdated>20201217121925</lastUpdated>
   </versioning>
 </metadata>
