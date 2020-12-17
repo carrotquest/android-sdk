@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.27-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.28-usRelease'
 }
 ```
 
