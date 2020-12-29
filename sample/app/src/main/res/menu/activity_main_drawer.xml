@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/auth"
+        app:showAsAction="always"
+        android:title="Авторизоваться">
+    </item>
+    <item
+        android:id="@+id/open_support"
+        app:showAsAction="always"
+        android:title="Открыть чат с поддержкой">
+    </item>
+</menu>

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">TestSDKApplication</string>
+    <string name="app_name">sample</string>
+
+    <string name="empty_fields_error">Заполните все поля</string>
+    <string name="connect_error">Не удалось установить соединение</string>
+    <string name="buy_success">Товары приобретены!</string>
+    <string name="auth_error">Произошла ошибка при авторизации пользователя</string>
+    <string name="empty_cart_error">В корзине нет товаров</string>
 </resources>
