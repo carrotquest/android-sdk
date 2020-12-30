@@ -56,7 +56,7 @@
         android:background="@drawable/ripple_bkg"
         android:padding="4dp"
         android:layout_margin="16dp"
-        android:text="Добавить в корзину"
+        android:text="@string/add_to_cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

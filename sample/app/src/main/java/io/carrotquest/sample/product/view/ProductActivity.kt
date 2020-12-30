@@ -25,7 +25,7 @@ class ProductActivity: AppCompatActivity(), IProductView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
 
-        product = intent.getParcelableExtra<ProductEntity>(PRODUCT_ARG)
+        product = intent.getParcelableExtra(PRODUCT_ARG)
         presenter.onStart(product)
 
         buy_button.setOnClickListener {
@@ -59,7 +59,7 @@ class ProductActivity: AppCompatActivity(), IProductView {
     }
 
     override fun showSuccessBuy() {
-        Toast.makeText(this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.product_added, Toast.LENGTH_SHORT).show()
     }
 
     override fun close() {

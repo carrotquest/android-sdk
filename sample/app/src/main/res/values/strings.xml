@@ -4,6 +4,27 @@
     <string name="empty_fields_error">Заполните все поля</string>
     <string name="connect_error">Не удалось установить соединение</string>
     <string name="buy_success">Товары приобретены!</string>
+    <string name="product_added">Товар добавлен в корзину</string>
     <string name="auth_error">Произошла ошибка при авторизации пользователя</string>
     <string name="empty_cart_error">В корзине нет товаров</string>
+
+    <string name="open_support_chat">Открыть чат с поддержкой</string>
+    <string name="auth">Авторизоваться</string>
+    <string name="write_data_to_fields">Заполните данные</string>
+    <string name="connect">Connect</string>
+    <string name="add_to_cart">Добавить в корзину</string>
+    <string name="buy">Купить</string>
+    <string name="name">Имя</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Email</string>
+    <string name="done">Готово</string>
+
+    <string name="user_auth_hint">User Auth Key</string>
+    <string name="api_key_hint">API Key</string>
+    <string name="app_id_hint">App ID</string>
+
+
+    <!-- Events -->
+    <string name="product_was_delete">Товар был удален из корзины</string>
+    <string name="product_name">Название</string>
 </resources>

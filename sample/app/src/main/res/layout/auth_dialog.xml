@@ -21,7 +21,7 @@
         android:id="@+id/auth_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Заполните данные"
+        android:text="@string/write_data_to_fields"
         android:textColor="#000"
         android:textSize="21sp"
         android:layout_margin="64dp"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:inputType="textPersonName"
-            android:hint="Имя" />
+            android:hint="@string/name" />
 
         <EditText
             android:id="@+id/email_et"
@@ -59,7 +59,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:inputType="textEmailAddress"
-            android:hint="Email" />
+            android:hint="@string/email" />
 
         <EditText
             android:id="@+id/phone_et"
@@ -70,7 +70,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:inputType="phone"
-            android:hint="Телефон" />
+            android:hint="@string/phone" />
 
     </LinearLayout>
 
@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_bkg"
-        android:text="Готово"
+        android:text="@string/done"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

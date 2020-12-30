@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
@@ -25,7 +24,6 @@ import io.carrotquest.sample.model.MainCartModel
 import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest.sample.utils.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -52,25 +50,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        MainCartModel.getInstance().addAddProductObserver(Observer { o, arg ->
+        MainCartModel.getInstance().addAddProductObserver { _, arg ->
             run {
                 if (arg is ProductEntity) {
                     incrementProductsCountInCart()
                 }
             }
-        })
+        }
 
-        MainCartModel.getInstance().addRemoveProductObserver(Observer { o, arg ->
+        MainCartModel.getInstance().addRemoveProductObserver { _, arg ->
             run {
                 if (arg is ProductEntity) {
                     decrementProductsCountInCart()
                 }
             }
-        })
+        }
 
         val userAuthKey = intent.getStringExtra(USER_AUTH_KEY_ARG)
         var userId = SharedPreferencesUtil.getString(this, USER_ID)
-        if (userId.isNullOrEmpty()) {
+        if (userId.isEmpty()) {
             userId = UUID.randomUUID().toString()
             SharedPreferencesUtil.saveString(this, USER_ID, userId)
         }

@@ -4,11 +4,11 @@
     <item
         android:id="@+id/auth"
         app:showAsAction="always"
-        android:title="Авторизоваться">
+        android:title="@string/auth">
     </item>
     <item
         android:id="@+id/open_support"
         app:showAsAction="always"
-        android:title="Открыть чат с поддержкой">
+        android:title="@string/open_support_chat">
     </item>
 </menu>
