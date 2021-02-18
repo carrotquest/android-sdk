@@ -12,7 +12,7 @@ allprojects {
     ...
     repositories {
         ...
-        maven { url "https://raw.github.com/dashly/android-sdk/beta_us" }
+        maven { url "https://raw.github.com/carrotquest/android-sdk/beta_us" }
         maven { url "https://jitpack.io" }
     }
 }
@@ -56,12 +56,12 @@ You'll need API Key and User Auth Key to work with Dashly for Android. Those can
 You should run this code in your application's onCreate() method in order to initialize Dashly:
 
 ```java
-Dasly.setup(this, apiKey);
+Dashly.setup(this, apiKey);
 ```
 
 Use this method to display additional info during debug process:
 ```java
-Dasly.isDebug(true);
+Dashly.isDebug(true);
 ```
 
 ## User authorization
@@ -69,19 +69,19 @@ Dasly.isDebug(true);
 In case your application has user authorization, you might want to send user id to Dashly:
 
 ```java
-Dasly.auth(userId, userAuthKey);
+Dashly.auth(userId, userAuthKey);
 ```
 or
 ```java
-Dasly.auth(userId, userAuthKey, callback)
+Dashly.auth(userId, userAuthKey, callback)
 ```
 
 ## User properties and events
 
 You can set user properties, using this method:
 ```java
-Dasly.setUserProperty(userProperty);
-Dasly.setUserProperty(userPropertyList);
+Dashly.setUserProperty(userProperty);
+Dashly.setUserProperty(userPropertyList);
 ```
 
 `UserProperty` class should be used for user properties description
@@ -100,11 +100,11 @@ More info on `Operations` can be found in [«User properties»](/props#_3) secti
 
 Use the following method for events tracking:
 ```java
-Dasly.trackEvent(eventName);
+Dashly.trackEvent(eventName);
 ```
 You can send additional event parameters as JSON string
 ```java
-Dasly.trackEvent(eventName, eventParams);
+Dashly.trackEvent(eventName, eventParams);
 ```
 
 ## Live chat
@@ -193,7 +193,7 @@ public void setLocationFAB(LocationFAB location)
 ### Open chat from anywhere
 After initialization you can open chat from any place using thix method:
 ```java
-Dasly.openChat(context);
+Dashly.openChat(context);
 ```
 
 ### Notofications
