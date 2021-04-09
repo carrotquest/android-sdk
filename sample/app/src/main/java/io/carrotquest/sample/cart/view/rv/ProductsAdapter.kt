@@ -32,7 +32,7 @@ class ProductsInCartAdapter(private val activity: AppCompatActivity): RecyclerVi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductInCartViewHolder {
         val v: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.product_in_cart_view_holder, parent, false)
-        return ProductInCartViewHolder(v)
+        return ProductInCartViewHolder(v, activity)
     }
 
     override fun getItemCount(): Int = items.size
@@ -43,7 +43,7 @@ class ProductsInCartAdapter(private val activity: AppCompatActivity): RecyclerVi
         }
     }
 
-    inner class ProductInCartViewHolder(private val v: View): RecyclerView.ViewHolder(v) {
+    inner class ProductInCartViewHolder(private val v: View, private val activity: AppCompatActivity): RecyclerView.ViewHolder(v) {
         private var product: ProductEntity? = null
         fun bind(product: ProductEntity) {
             this.product = product
@@ -54,7 +54,7 @@ class ProductsInCartAdapter(private val activity: AppCompatActivity): RecyclerVi
                 .into(v.product_in_cart_iv as ImageView)
 
             v.delete_product_btn.setOnClickListener {
-                Carrot.trackEvent(activity.getString(R.string.product_was_delete), "{\"${activity.getString(R.string.product_name)}\":\"${this.product?.name}\"}")
+                Carrot.trackEvent("Товар был удален из корзины", "{\"Название\":\"${this.product?.name}\"}")
                 MainCartModel.getInstance().removeProduct(product)
             }
         }

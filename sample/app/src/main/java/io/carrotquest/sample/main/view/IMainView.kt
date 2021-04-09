@@ -1,5 +1,6 @@
 package io.carrotquest.sample.main.view
 
+import androidx.appcompat.widget.DialogTitle
 import io.carrotquest.sample.model.ProductEntity
 
 interface IMainView {
@@ -14,4 +15,5 @@ interface IMainView {
     fun openAuthDialog()
 
     fun hideNavigationDrawer()
+    fun updateSupportItemTitle(title: String)
 }

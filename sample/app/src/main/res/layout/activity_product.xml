@@ -56,7 +56,7 @@
         android:background="@drawable/ripple_bkg"
         android:padding="4dp"
         android:layout_margin="16dp"
-        android:text="@string/add_to_cart"
+        android:text="@string/add_to_card_str"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

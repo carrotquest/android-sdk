@@ -13,6 +13,7 @@ import io.carrotquest.sample.cart.view.rv.ProductsInCartAdapter
 import io.carrotquest.sample.model.MainCartModel
 import io.carrotquest.sample.model.ProductEntity
 import kotlinx.android.synthetic.main.activity_cart.*
+import java.util.Observer
 
 class CartActivity: AppCompatActivity(), ICartView {
 
@@ -33,7 +34,7 @@ class CartActivity: AppCompatActivity(), ICartView {
 
         presenter.onCreate()
 
-        MainCartModel.getInstance().addRemoveProductObserver { _, arg ->
+        MainCartModel.getInstance().addRemoveProductObserver(Observer { _, arg ->
             run {
                 if (arg is ProductEntity) {
                     adapter.removeProduct(arg)
@@ -42,7 +43,7 @@ class CartActivity: AppCompatActivity(), ICartView {
                     }
                 }
             }
-        }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,7 +70,7 @@ class CartActivity: AppCompatActivity(), ICartView {
     }
 
     override fun showSuccess() {
-        Toast.makeText(this, R.string.buy_success, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Товары приобретены!", Toast.LENGTH_SHORT).show()
     }
 
     override fun close() {

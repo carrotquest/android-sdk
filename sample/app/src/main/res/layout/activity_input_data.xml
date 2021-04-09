@@ -36,7 +36,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:hint="@string/app_id_hint" />
+            android:hint="@string/app_id_str" />
 
         <EditText
             android:id="@+id/api_key_et"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:hint="@string/api_key_hint" />
+            android:hint="@string/api_key_str" />
 
         <EditText
             android:id="@+id/user_auth_key_et"
@@ -60,7 +60,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
-            android:hint="@string/user_auth_hint" />
+            android:hint="User Auth Key" />
 
         <Button
             android:id="@+id/connect_btn"
@@ -69,7 +69,7 @@
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:background="@drawable/ripple_bkg"
-            android:text="@string/connect" />
+            android:text="@string/connct_str" />
 
     </LinearLayout>
 

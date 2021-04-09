@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
@@ -24,6 +25,8 @@ import io.carrotquest.sample.model.MainCartModel
 import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest.sample.utils.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -78,6 +81,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer_layout.openDrawer(GravityCompat.START)
         }
 
+        drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                presenter.drawerOpened(this@MainActivity)
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+        })
 
         products_rv.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -106,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(data != null) {
+        if (data != null) {
             val product = data.getParcelableExtra<ProductEntity>(PR_IN_CART)
             MainCartModel.getInstance().addProduct(product)
         }
@@ -122,8 +139,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             hideNavigationDrawer()
-        }
-        else {
+        } else {
             presenter.onBack()
         }
     }
@@ -141,11 +157,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun showAuthError() {
-        Toast.makeText(this, R.string.auth_error, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Произошла ошибка при авторизации пользователя", Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun showEmptyCartError() {
-        Toast.makeText(this, R.string.empty_cart_error, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "В корзине нет товаров", Toast.LENGTH_SHORT).show()
     }
 
     companion object Constants {
@@ -155,36 +172,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun incrementProductsCountInCart() {
-        val oldValue = try{
+        val oldValue = try {
             countProductsInCart.text.toString().toInt()
-        }
-        catch (t: Throwable){
+        } catch (t: Throwable) {
             0
         }
         val nValue = oldValue + 1
 
         countProductsInCart.text = (nValue).toString()
-        countProductsInCart.visibility = if(nValue <= 0) View.GONE else View.VISIBLE
+        countProductsInCart.visibility = if (nValue <= 0) View.GONE else View.VISIBLE
     }
 
     private fun decrementProductsCountInCart() {
-        val oldValue = try{
+        val oldValue = try {
             countProductsInCart.text.toString().toInt()
-        }
-        catch (t: Throwable){
+        } catch (t: Throwable) {
             0
         }
-        val nValue = if(oldValue > 0) oldValue - 1 else 0
+        val nValue = if (oldValue > 0) oldValue - 1 else 0
 
         countProductsInCart.text = (nValue).toString()
-        countProductsInCart.visibility = if(nValue <= 0) View.GONE else View.VISIBLE
+        countProductsInCart.visibility = if (nValue <= 0) View.GONE else View.VISIBLE
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
             R.id.open_support -> presenter.openChat(this)
             R.id.auth -> presenter.openAuth()
+            R.id.logout -> presenter.onLogout(this)
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -198,6 +214,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun showFab() {
         cq_fab.show()
     }
+
+    override fun updateSupportItemTitle(title: String) {
+        val menuSupportItem = drawer_layout.nav_view.menu.findItem(R.id.open_support)
+        if (menuSupportItem != null) {
+            menuSupportItem.title = title
+        }
+    }
+
 
     override fun openAuthDialog() {
         val authDialog = AuthDialog()

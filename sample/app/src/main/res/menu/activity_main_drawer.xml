@@ -4,11 +4,16 @@
     <item
         android:id="@+id/auth"
         app:showAsAction="always"
-        android:title="@string/auth">
+        android:title="@string/do_auth_str">
     </item>
     <item
         android:id="@+id/open_support"
         app:showAsAction="always"
-        android:title="@string/open_support_chat">
+        android:title="@string/open_chat_str">
+    </item>
+    <item
+        android:id="@+id/logout"
+        app:showAsAction="always"
+        android:title="@string/logout_str">
     </item>
 </menu>

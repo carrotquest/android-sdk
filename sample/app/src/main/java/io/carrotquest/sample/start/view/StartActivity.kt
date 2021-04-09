@@ -38,7 +38,7 @@ class StartActivity : AppCompatActivity(), IStartView {
     }
 
     override fun showConnectError() {
-        Toast.makeText(this, R.string.connect_error, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Не удалось установить соединение", Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {

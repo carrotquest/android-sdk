@@ -3,6 +3,7 @@ package io.carrotquest.sample.main.presenter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import io.carrotquest.sample.R
 import io.carrotquest.sample.cart.view.CartActivity
 import io.carrotquest.sample.constants.*
 import io.carrotquest.sample.data.getDemoData
@@ -12,7 +13,6 @@ import io.carrotquest.sample.utils.SharedPreferencesUtil
 import io.carrotquest_sdk.android.Carrot
 import io.carrotquest_sdk.android.core.main.CarrotSDK
 import java.util.*
-
 
 class MainPresenter(private var view: IMainView?) {
 
@@ -47,7 +47,10 @@ class MainPresenter(private var view: IMainView?) {
     fun onTapCart(context: Context) {
         val selectedProducts = MainCartModel.getInstance().getProducts()
         if (selectedProducts.size > 0) {
-            Carrot.trackEvent("Переход в корзину", "{\"Количество товаров\":\"${selectedProducts.size}\"}")
+            Carrot.trackEvent(
+                "Переход в корзину",
+                "{\"Количество товаров\":\"${selectedProducts.size}\"}"
+            )
             val intent = Intent(context, CartActivity::class.java)
             context.startActivity(intent)
         } else {
@@ -97,5 +100,21 @@ class MainPresenter(private var view: IMainView?) {
             }
 
         builder.show()
+    }
+
+    fun drawerOpened(context: Context) {
+        val unreadConversationsCount = Carrot.getUnreadConversations().size
+        val title = if (unreadConversationsCount > 0) {
+            context.getString(R.string.open_chat_str) + " (${unreadConversationsCount})"
+        } else {
+            context.getString(R.string.open_chat_str)
+        }
+
+        view?.updateSupportItemTitle(title)
+    }
+
+    fun onLogout(context: Context) {
+        Carrot.deInit()
+        view?.updateSupportItemTitle(context.getString(R.string.open_chat_str) )
     }
 }

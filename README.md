@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.30-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.31-commonRelease'
 }
 ```
 
@@ -56,11 +56,11 @@ android {
 Для инициализации Carrot quest вам нужно выполнить следующий код в методе onCreate() вашего приложения:
 
 ```java
-Carrot.setup(this, apiKey);
+Carrot.setup(this, apiKey, appId);
 ```
 или
 ```java
-Carrot.setup(this, apiKey, callback)
+Carrot.setup(this, apiKey, appId, callback)
 ```
 
 Для вывода дополнительной информации во время отладки используйте метод:
@@ -84,7 +84,7 @@ Carrot.auth(userId, userAuthKey, callback)
 ```java
 Carrot.deInit()
 ```
-а после завново вызвать методы ининциализации и (опциональьно) авторизации.
+а после завново вызвать методы ининциализации и (опционально) авторизации.
 
 
 ## Свойства пользователей и события
@@ -218,9 +218,8 @@ Carrot.openChat(context);
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived (RemoteMessage remoteMessage) {
-        Map<String, String> data = remoteMessage.getData();
-        if (data.containsKey(NotificationsConstants.CQ_SDK_PUSH) && "true".equals(data.get(NotificationsConstants.CQ_SDK_PUSH))) {
-            Carrot.sendFirebaseNotification(remoteMessage);
+        if (Carrot.isCarrotPush(remoteMessage)) {
+            Carrot.sendFirebasePushNotification(remoteMessage, this)
         } else {
             //Your code
         }
@@ -229,7 +228,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 ```
 
 Иконку и цвет уведомлений о новых сообщениях можно изменить.
-Для установки иконки на уведомления добавьте иконку с названием `ic_cq_notification.xml` в директорию `res/drawable`.
+Для установки иконки на уведомления вызовете следующий метод после инициализации SDK:
+```java
+Carrot.setNotificationIcon(R.drawable.ic_notificatrion_icon);
+```
+Либо добавьте иконку с названием `ic_cq_notification.xml` в директорию `res/drawable`
 Для установки цвета уведомлений в файл ресурсов пропишите цвет с названием `colorCqNotify` и нужным вам значением:
 ``` xml
  <color name="colorCqNotify">#EF7F28</color>
