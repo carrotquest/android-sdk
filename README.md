@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.30-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.31-usRelease'
 }
 ```
 
@@ -56,7 +56,11 @@ You'll need API Key and User Auth Key to work with Dashly for Android. Those can
 You should run this code in your application's onCreate() method in order to initialize Dashly:
 
 ```java
-Dashly.setup(this, apiKey);
+Dashly.setup(this, apiKey, appId);
+```
+or
+```java
+Dashly.setup(this, apiKey, appId, callback)
 ```
 
 Use this method to display additional info during debug process:
