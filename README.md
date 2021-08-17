@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.32-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.33-usRelease'
 }
 ```
 
@@ -100,7 +100,7 @@ More info on `Operations` can be found in [«User properties»](/props#_3) secti
 `key` field value should not start with `$`.
 
 
-`CarrotUserProperty` and `EcommerceUProperty` classes should be used to set [system properties](/props#_4)
+`CarrotUserProperty` and `EcommerceUserProperty` classes should be used to set [system properties](/props#_4)
 
 Use the following method for events tracking:
 ```java
