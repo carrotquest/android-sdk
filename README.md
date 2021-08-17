@@ -33,7 +33,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.32-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.33-commonRelease'
 }
 ```
 
@@ -107,7 +107,7 @@ public UserProperty(Operation operation, String key, String value)
 Поле `key` не может начинаться с символа `$`.
 
 
-Для установки [системных свойств](https://carrotquest.io/developers/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUProperty`.
+Для установки [системных свойств](https://carrotquest.io/developers/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUserProperty`.
 
 Для отслеживания событий используйте
 ```java
