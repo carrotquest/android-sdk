@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Demo CQ SDK</string>
+    <string name="open_chat_str">Открыть чат с поддержкой</string>
+    <string name="do_auth_str">Авторизоваться</string>
+    <string name="logout_str">Выйти</string>
+
+    <string name="app_id_str">App ID</string>
+    <string name="api_key_str">API Key</string>
+    <string name="connct_str">Connect</string>
+    <string name="add_to_card_str">Добавить в корзину</string>
+    <string name="fill_fields_str">Заполните данные</string>
+    <string name="name_str">Имя</string>
+    <string name="email_str">Email</string>
+    <string name="phone_str">Телефон</string>
+    <string name="done_str">Готово</string>
+    <string name="fil_all_fields_warning_str">Заполните все поля</string>
+    <string name="connect_error_str">Не удалось установить соединение</string>
+</resources>
