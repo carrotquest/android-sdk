@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.carrotquest</groupId>
+  <artifactId>image-picker</artifactId>
+  <versioning>
+    <release>1.0.7-usRelease</release>
+    <versions>
+      <version>1.0.7-commonDebug</version>
+      <version>1.0.7-commonRelease</version>
+      <version>1.0.7-usDebug</version>
+      <version>1.0.7-usRelease</version>
+    </versions>
+    <lastUpdated>20201019111201</lastUpdated>
+  </versioning>
+</metadata>
