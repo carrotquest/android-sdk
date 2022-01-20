@@ -11,7 +11,7 @@
   "createdBy": {
     "gradle": {
       "version": "6.1.1",
-      "buildId": "has5j6ppfna3va6ads3m2f4l7q"
+      "buildId": "7ag53wf4r5hkhj37jakpzg5axe"
     }
   },
   "variants": [
@@ -429,11 +429,11 @@
         {
           "name": "android-sdk-1.0.42-commonRelease.aar",
           "url": "android-sdk-1.0.42-commonRelease.aar",
-          "size": 690245,
-          "sha512": "a709175079755ccbcc0a3fd4da736ef95899fd452a003b33681c0bbb8f0630c44968b2ad979e772394b9c87b9580319ddea6f2a7826a2a99c21b207a4987bef7",
-          "sha256": "0296f1fdea9cd4efc2361fd65abd992164f73154c665fd70aea4ef4da95d063c",
-          "sha1": "b110943443774e5d3fb2d5f89a8340e31eb36361",
-          "md5": "4f695275f5ad40a718f17213cd0c855b"
+          "size": 948393,
+          "sha512": "8ef393d63b5f6dd5bb37e532bffcf76a92ba9cee39f484e1bb3490481bfc2e111b7946ce89047294a1707c47394632c0f3beecd2b55212a360875867c74f5b07",
+          "sha256": "8df36b25d6e2f87252dc2b990721b9c95ffef1d3b0b45e92d2343d22cefbc7ab",
+          "sha1": "8590db318ae44fb06a4f77ce59b27f9e91256b1b",
+          "md5": "99a12ea504d371d65500ded6d1f67dc5"
         }
       ]
     },
@@ -565,11 +565,11 @@
         {
           "name": "android-sdk-1.0.42-commonRelease.aar",
           "url": "android-sdk-1.0.42-commonRelease.aar",
-          "size": 690245,
-          "sha512": "a709175079755ccbcc0a3fd4da736ef95899fd452a003b33681c0bbb8f0630c44968b2ad979e772394b9c87b9580319ddea6f2a7826a2a99c21b207a4987bef7",
-          "sha256": "0296f1fdea9cd4efc2361fd65abd992164f73154c665fd70aea4ef4da95d063c",
-          "sha1": "b110943443774e5d3fb2d5f89a8340e31eb36361",
-          "md5": "4f695275f5ad40a718f17213cd0c855b"
+          "size": 948393,
+          "sha512": "8ef393d63b5f6dd5bb37e532bffcf76a92ba9cee39f484e1bb3490481bfc2e111b7946ce89047294a1707c47394632c0f3beecd2b55212a360875867c74f5b07",
+          "sha256": "8df36b25d6e2f87252dc2b990721b9c95ffef1d3b0b45e92d2343d22cefbc7ab",
+          "sha1": "8590db318ae44fb06a4f77ce59b27f9e91256b1b",
+          "md5": "99a12ea504d371d65500ded6d1f67dc5"
         }
       ]
     }
