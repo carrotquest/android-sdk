@@ -11,7 +11,7 @@
   "createdBy": {
     "gradle": {
       "version": "6.1.1",
-      "buildId": "has5j6ppfna3va6ads3m2f4l7q"
+      "buildId": "7ag53wf4r5hkhj37jakpzg5axe"
     }
   },
   "variants": [
@@ -429,11 +429,11 @@
         {
           "name": "android-sdk-1.0.42-usRelease.aar",
           "url": "android-sdk-1.0.42-usRelease.aar",
-          "size": 690237,
-          "sha512": "2234202e542a52d00dec07272824cdc9fc74482006f7ce0ea8c2636ff0974ea26b07614bf7795c9896633038497acc2e69a1ee1969ea3cbaab102d81a8d4a1da",
-          "sha256": "dbe007a3039ec52bac89921a993859dd017adaf7faaa7cd85b645864db8fde83",
-          "sha1": "2e7ab695d501f4b49ceb4d665d7255b57c770670",
-          "md5": "70f5e1c5d84f72ac5a95b4c876067db6"
+          "size": 947897,
+          "sha512": "28f61462068b7811fbae39ff94bcd79b7138b9f025b2e8b516fcf8d55589019ffd2c83afec146c55ee9b5a5b2467db7ccc58a971f9146bf86ec6e7edc5d5d28c",
+          "sha256": "7e6b6ad345ea967ad1cad9a3581c710bd2933cd54b4e28eab052a5ad765d9285",
+          "sha1": "2251197f1272d04ab398ae4707294e91932b6133",
+          "md5": "23bbe3d76a2c2ccac84cd1b6574d0dde"
         }
       ]
     },
@@ -565,11 +565,11 @@
         {
           "name": "android-sdk-1.0.42-usRelease.aar",
           "url": "android-sdk-1.0.42-usRelease.aar",
-          "size": 690237,
-          "sha512": "2234202e542a52d00dec07272824cdc9fc74482006f7ce0ea8c2636ff0974ea26b07614bf7795c9896633038497acc2e69a1ee1969ea3cbaab102d81a8d4a1da",
-          "sha256": "dbe007a3039ec52bac89921a993859dd017adaf7faaa7cd85b645864db8fde83",
-          "sha1": "2e7ab695d501f4b49ceb4d665d7255b57c770670",
-          "md5": "70f5e1c5d84f72ac5a95b4c876067db6"
+          "size": 947897,
+          "sha512": "28f61462068b7811fbae39ff94bcd79b7138b9f025b2e8b516fcf8d55589019ffd2c83afec146c55ee9b5a5b2467db7ccc58a971f9146bf86ec6e7edc5d5d28c",
+          "sha256": "7e6b6ad345ea967ad1cad9a3581c710bd2933cd54b4e28eab052a5ad765d9285",
+          "sha1": "2251197f1272d04ab398ae4707294e91932b6133",
+          "md5": "23bbe3d76a2c2ccac84cd1b6574d0dde"
         }
       ]
     }
