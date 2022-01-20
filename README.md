@@ -198,7 +198,7 @@ After initialization you can open chat from any place using thix method:
 Dashly.openChat(context);
 ```
 
-### Notofications
+### Notfications
 SDK uses Firebase Cloud Messaging for sending notifications. At the moment you are required to get a key and send it to our support. Cloud Messaging setup is described [here](https://firebase.google.com/docs/cloud-messaging?authuser=0)
 
 Icon and new message notifications color can be altered.
