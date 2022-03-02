@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.44-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.45-commonRelease'
 }
 ```
 
@@ -211,9 +211,15 @@ Carrot.openChat(context);
 ### Уведомления
 Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим на данном этапе необходимо получить ключ и отправить его нам в поддержку. Процесс настройки сервиса Firebase Cloud Messaging описан [здесь](https://firebase.google.com/docs/cloud-messaging?authuser=0)
 
-Если вы уже используете сервис Firebase Cloud Messaging для своих push-уведомлений, то для корректной работы push-уведомлений в SDK необходимо отредактировать вашу службу FirebaseMessagingService. Это необходимо для "прокидывания" наших сообщений внутрь SDK. Пример:
+Если вы уже используете сервис Firebase Cloud Messaging для своих push-уведомлений, то для корректной работы push-уведомлений в SDK необходимо отредактировать вашу службу FirebaseMessagingService. Это необходимо для "прокидывания" токена и наших сообщений внутрь SDK. Пример:
 ``` java
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    @Override
+    public void onNewToken(String token) {
+        Carrot.sendFcmToken(token);
+        super.onNewToken(token);
+    }
+
     @Override
     public void onMessageReceived (RemoteMessage remoteMessage) {
         if (Carrot.isCarrotPush(remoteMessage)) {
