@@ -26,7 +26,6 @@ import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest.sample.utils.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import java.util.*
 import kotlin.system.exitProcess

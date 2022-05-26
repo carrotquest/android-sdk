@@ -15,7 +15,7 @@ class StartPresenter(private var view: IStartView?) {
         val appId = SharedPreferencesUtil.getString(context, APP_ID_SP)
         val userAuthKey = SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP)
 
-        if (!apiKey.isNullOrEmpty() && !appId.isNullOrEmpty() && !userAuthKey.isNullOrEmpty()) {
+        if (apiKey.isNotEmpty() && appId.isNotEmpty() && userAuthKey.isNotEmpty()) {
             Carrot.setup(context, apiKey, appId, object : CarrotSDK.Callback<Boolean> {
                 override fun onFailure(p0: Throwable?) {
                     view?.showConnectError()

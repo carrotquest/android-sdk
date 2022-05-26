@@ -22,12 +22,26 @@ class MainCartModel private constructor() {
     private val addProductObservable: CartObservable = CartObservable()
     private val removeProductObservable: CartObservable = CartObservable()
 
-    fun addProduct(product: ProductEntity) {
-        products.add(product)
-        addProductObservable.notifyObservers(product)
+    fun addProduct(product: ProductEntity?) {
+        if(product != null) {
+            products.add(product)
+            addProductObservable.notifyObservers(product)
 
-        Carrot.setUserProperty(UserProperty(UserProperty.Operation.UNION,"\$cart_items", product.name))
-        Carrot.setUserProperty(UserProperty(UserProperty.Operation.ADD,"\$cart_amount", product.price.toInt().toString()))
+            Carrot.setUserProperty(
+                UserProperty(
+                    UserProperty.Operation.UNION,
+                    "\$cart_items",
+                    product.name
+                )
+            )
+            Carrot.setUserProperty(
+                UserProperty(
+                    UserProperty.Operation.ADD,
+                    "\$cart_amount",
+                    product.price.toInt().toString()
+                )
+            )
+        }
     }
 
     fun addAddProductObserver(observer: Observer) {

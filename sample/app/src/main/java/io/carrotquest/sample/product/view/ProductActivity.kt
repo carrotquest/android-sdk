@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_product.*
 class ProductActivity: AppCompatActivity(), IProductView {
 
     private val presenter = ProductPresenter(this)
-    private lateinit var product: ProductEntity
+    private var product: ProductEntity? = null
 
     companion object {
         const val PRODUCT_ARG = "product_arg"

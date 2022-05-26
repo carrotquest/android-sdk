@@ -16,8 +16,8 @@ import java.util.*
 
 class MainPresenter(private var view: IMainView?) {
 
-    fun onCreate(userAuthKey: String, userId: String) {
-        if (userAuthKey.isNotEmpty()) {
+    fun onCreate(userAuthKey: String?, userId: String) {
+        if (!userAuthKey.isNullOrEmpty()) {
             Carrot.auth(userId, userAuthKey, object : CarrotSDK.Callback<Boolean> {
                 override fun onFailure(p0: Throwable?) {
                     view?.showAuthError()
