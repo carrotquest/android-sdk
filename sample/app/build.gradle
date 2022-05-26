@@ -47,5 +47,5 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     //Carrot quest SDK
-    implementation 'io.carrotquest:android-sdk:1.0.51-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.55-usRelease'
 }
