@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.55-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.56-commonRelease'
 }
 ```
 
@@ -118,6 +118,10 @@ Carrot.trackEvent(eventName, eventParams);
 Вы можете получить список идентификаторов непрочитанных на данный момент диалогов
 ```java
  Carrot.getUnreadConversations();
+```
+Также можно подписаться на изменения в списке идентификаторов непрочитанных диалогов
+```java
+ Carrot.setUnreadConversationsCallback(callback);
 ```
 
 ## Чат с оператором
@@ -264,4 +268,9 @@ MyNewMessageBroadcastReceiver messageReceiver = new MyNewMessageBroadcastReceive
 IntentFilter filter = new IntentFilter();
 filter.addAction(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ACTION);
 registerReceiver(messageReceiver, filter);
+```
+
+Важно! Если приложение закрыто и пользователь откроет чат по нажатию на пуш, то ваша стартовая активность не запустится. Приложение закроется вместе с закрытием чата. Чтобы исправить это, вы можете передать полное имя активности, которая должна запуститься при закрытии чата:
+```java
+Carrot.setParentActivityClassName("io.test.MainActivity");
 ```
