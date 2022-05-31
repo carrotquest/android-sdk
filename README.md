@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.55-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.56-usRelease'
 }
 ```
 
@@ -107,6 +107,11 @@ Dashly.trackEvent(eventName);
 You can send additional event parameters as JSON string
 ```java
 Dashly.trackEvent(eventName, eventParams);
+```
+
+You can subscribe to changes in the list of unread conversation identifiers.
+```java
+ Carrot.setUnreadConversationsCallback(callback);
 ```
 
 ## Live chat
@@ -206,4 +211,9 @@ Name your icon `ic_cq_notification.xml` and put it into `res/drawable` directory
 Add `colorCqNotify` named color of required value into your resource file to setup notifications color:
 ``` xml
  <color name="colorCqNotify">#EF7F28</color>
+```
+
+Important! If the app is closed and a user opens the live chat by clicking on the push, your starting activity won't start. The app will close along with the closure of the live chat. To fix this, you can pass the full name of the activity that should start when you close the live chat:
+```java
+Carrot.setParentActivityClassName("io.test.MainActivity");
 ```
