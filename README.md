@@ -121,7 +121,7 @@ openning method at desired moment.
 ### Floating Button
 This is an interface element inherited from `ConstraintLayout`. You can embed it in your markup:
 ``` xml
-<io.carrot_sdk.android.ui.fab.FloatingButton
+<io.carrotquest_sdk.android.ui.fab.FloatingButton
         android:id="@+id/cq_sdk_float_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
