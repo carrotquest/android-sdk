@@ -3,8 +3,8 @@
   <groupId>io.carrotquest</groupId>
   <artifactId>android-sdk</artifactId>
   <versioning>
-    <latest>1.0.67-usRelease</latest>
-    <release>1.0.67-usRelease</release>
+    <latest>1.0.68-usRelease</latest>
+    <release>1.0.68-usRelease</release>
     <versions>
       <version>1.0.40-commonDebug</version>
       <version>1.0.40-commonRelease</version>
@@ -199,7 +199,47 @@
       <version>1.0.67-usDebug</version>
       <version>1.0.67-commonRelease</version>
       <version>1.0.67-usRelease</version>
+      <version>1.0.67.1-commonDebug</version>
+      <version>1.0.67.1-usDebug</version>
+      <version>1.0.67.1-usRelease</version>
+      <version>1.0.67.1-commonRelease</version>
+      <version>1.0.67.2-commonDebug</version>
+      <version>1.0.67.2-usDebug</version>
+      <version>1.0.67.2-commonRelease</version>
+      <version>1.0.67.2-usRelease</version>
+      <version>1.0.67.3-commonDebug</version>
+      <version>1.0.67.3-usDebug</version>
+      <version>1.0.67.3-commonRelease</version>
+      <version>1.0.67.3-usRelease</version>
+      <version>1.0.67.4-commonDebug</version>
+      <version>1.0.67.4-usDebug</version>
+      <version>1.0.67.4-commonRelease</version>
+      <version>1.0.67.4-usRelease</version>
+      <version>1.0.67.5-commonDebug</version>
+      <version>1.0.67.5-usDebug</version>
+      <version>1.0.67.5-commonRelease</version>
+      <version>1.0.67.5-usRelease</version>
+      <version>1.0.67.6-commonDebug</version>
+      <version>1.0.67.6-usDebug</version>
+      <version>1.0.67.6-commonRelease</version>
+      <version>1.0.67.6-usRelease</version>
+      <version>1.0.67.7-commonDebug</version>
+      <version>1.0.67.7-usDebug</version>
+      <version>1.0.67.7-usRelease</version>
+      <version>1.0.67.7-commonRelease</version>
+      <version>1.0.67.8-commonDebug</version>
+      <version>1.0.67.8-usDebug</version>
+      <version>1.0.67.8-usRelease</version>
+      <version>1.0.67.8-commonRelease</version>
+      <version>1.0.67.9-commonDebug</version>
+      <version>1.0.67.9-usDebug</version>
+      <version>1.0.67.9-commonRelease</version>
+      <version>1.0.67.9-usRelease</version>
+      <version>1.0.68-commonDebug</version>
+      <version>1.0.68-usDebug</version>
+      <version>1.0.68-commonRelease</version>
+      <version>1.0.68-usRelease</version>
     </versions>
-    <lastUpdated>20230802093808</lastUpdated>
+    <lastUpdated>20230822065709</lastUpdated>
   </versioning>
 </metadata>
