@@ -3,8 +3,8 @@
   <groupId>io.carrotquest</groupId>
   <artifactId>android-sdk</artifactId>
   <versioning>
-    <latest>1.0.70-usRelease</latest>
-    <release>1.0.70-usRelease</release>
+    <latest>1.0.71-usRelease</latest>
+    <release>1.0.71-usRelease</release>
     <versions>
       <version>1.0.40-commonDebug</version>
       <version>1.0.40-commonRelease</version>
@@ -255,7 +255,35 @@
       <version>1.0.70-commonRelease</version>
       <version>1.0.70-usDebug</version>
       <version>1.0.70-usRelease</version>
+      <version>1.0.70.1-commonDebug</version>
+      <version>1.0.70.1-usDebug</version>
+      <version>1.0.70.1-commonRelease</version>
+      <version>1.0.70.1-usRelease</version>
+      <version>1.0.70.2-commonDebug</version>
+      <version>1.0.70.2-usDebug</version>
+      <version>1.0.70.2-commonRelease</version>
+      <version>1.0.70.2-usRelease</version>
+      <version>1.0.70.3-commonDebug</version>
+      <version>1.0.70.3-usDebug</version>
+      <version>1.0.70.3-commonRelease</version>
+      <version>1.0.70.3-usRelease</version>
+      <version>1.0.70.4-commonDebug</version>
+      <version>1.0.70.4-commonRelease</version>
+      <version>1.0.70.4-usDebug</version>
+      <version>1.0.70.4-usRelease</version>
+      <version>1.0.70.5-commonDebug</version>
+      <version>1.0.70.5-usDebug</version>
+      <version>1.0.70.5-commonRelease</version>
+      <version>1.0.70.5-usRelease</version>
+      <version>1.0.70.6-commonDebug</version>
+      <version>1.0.70.6-usDebug</version>
+      <version>1.0.70.6-commonRelease</version>
+      <version>1.0.70.6-usRelease</version>
+      <version>1.0.71-commonDebug</version>
+      <version>1.0.71-commonRelease</version>
+      <version>1.0.71-usRelease</version>
+      <version>1.0.71-usDebug</version>
     </versions>
-    <lastUpdated>20231102101752</lastUpdated>
+    <lastUpdated>20231124055706</lastUpdated>
   </versioning>
 </metadata>
