@@ -68,7 +68,9 @@ Dashly.isDebug(true);
 
 ## User authorization
 
-In case your application has user authorization, you might want to send user id to Dashly:
+In case your application has user authorization, you might want to send user id to Dashly. There are two ways of authorization: send userAuthKey directly, send hash generated at your backend.
+
+1. Send userAuthKey directly
 
 ```java
 Dashly.auth(userId, userAuthKey);
@@ -76,6 +78,16 @@ Dashly.auth(userId, userAuthKey);
 or
 ```java
 Dashly.auth(userId, userAuthKey, callback)
+```
+
+2. Send hash generated at your backend
+
+```java
+Dashly.hashedAuth(userId, hash);
+```
+или
+```java
+Dashly.hashedAuth(userId, hash, callback)
 ```
 
 ## User properties and events
