@@ -85,7 +85,7 @@ Dashly.auth(userId, userAuthKey, callback)
 ```java
 Dashly.hashedAuth(userId, hash);
 ```
-или
+or
 ```java
 Dashly.hashedAuth(userId, hash, callback)
 ```
