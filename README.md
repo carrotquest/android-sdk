@@ -68,7 +68,9 @@ Carrot.setDebug(true);
 
 ## Авторизация пользователей
 
-Если в вашем приложении присутствует авторизация пользователей, вы можете передать id пользователя в Carrot:
+Если в вашем приложении присутствует авторизация пользователей, вы можете передать id пользователя в Carrot quest. Существует два способа авторизации: напрямую передать userAuthKey, передать hash генерируемый у вас на бэке.
+
+1. Вход через user auth key:
 
 ```java
 Carrot.auth(userId, userAuthKey);
@@ -76,6 +78,16 @@ Carrot.auth(userId, userAuthKey);
 или
 ```java
 Carrot.auth(userId, userAuthKey, callback)
+```
+
+2. Вход через hash:
+
+```java
+Carrot.hashedAuth(userId, hash);
+```
+или
+```java
+Carrot.hashedAuth(userId, hash, callback)
 ```
 
 Чтобы сменить пользователя, нужно сначала вызвать метод деинициализации:
