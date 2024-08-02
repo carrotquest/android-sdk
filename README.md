@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.83-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.84-commonRelease'
 }
 ```
 
@@ -68,7 +68,7 @@ Carrot.setDebug(true);
 
 ## Авторизация пользователей
 
-Если в вашем приложении присутствует авторизация пользователей, вы можете передать id пользователя в Carrot quest. Существует два способа авторизации: напрямую передать userAuthKey, передать hash генерируемый у вас на бэке.
+Если в вашем приложении присутствует авторизация пользователей, вы можете передать id пользователя в Carrot quest. Существует два способа авторизации: напрямую передать userAuthKey, передать hash генерируемый у вас на бэке. В callback при успешном входе вернется значение свойства carrot_id.
 
 1. Вход через user auth key:
 
