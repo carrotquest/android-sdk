@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.83-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.84-usRelease'
 }
 ```
 
@@ -68,7 +68,7 @@ Dashly.isDebug(true);
 
 ## User authorization
 
-In case your application has user authorization, you might want to send user id to Dashly. There are two ways of authorization: send userAuthKey directly, send hash generated at your backend.
+In case your application has user authorization, you might want to send user id to Dashly. There are two ways of authorization: send userAuthKey directly, send hash generated at your backend. In the callback upon successful login, the value of the 'dashly_id' property will be returned.
 
 1. Send userAuthKey directly
 
