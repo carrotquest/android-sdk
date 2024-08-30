@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.84-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.85-usRelease'
 }
 ```
 
@@ -119,6 +119,10 @@ Dashly.trackEvent(eventName);
 You can send additional event parameters as JSON string
 ```java
 Dashly.trackEvent(eventName, eventParams);
+```
+The SDK provides the capability to track navigation within the application. This is necessary to trigger various messages on specific screens as needed. To achieve this, use the method:
+```java
+Dashly.trackScreen(screenName);
 ```
 
 You can subscribe to changes in the list of unread conversation identifiers.
