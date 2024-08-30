@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.84-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.85-commonRelease'
 }
 ```
 
@@ -126,6 +126,10 @@ Carrot.trackEvent(eventName);
 Вы можете указать дополнительные параметры для события в виде JSON-строки и передать их в метод
 ```java
 Carrot.trackEvent(eventName, eventParams);
+```
+В SDK есть возможность трекинга навигации внутри приложения для того, чтобы при необходимости запускать различные триггерные сообщения на определенных экранах. Для этого используйте метод
+```java
+Carrot.trackScreen(screenName);
 ```
 Вы можете получить список идентификаторов непрочитанных на данный момент диалогов
 ```java
