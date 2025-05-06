@@ -1,6 +1,6 @@
 ## Carrot quest для Android
 
-Carrot quest для Android поддерживает API 16 и выше.
+Carrot quest для Android поддерживает API 19 и выше.
 
 ## Установка
 На данный момент Carrot quest для Android можно установить с помощью gradle.
@@ -31,7 +31,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.94-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.95-commonRelease'
 }
 ```
 
@@ -40,8 +40,8 @@ dependencies {
 android {
     ...
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility '17'
+        targetCompatibility '17'
     }
 }
 ```
