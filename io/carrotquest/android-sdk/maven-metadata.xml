@@ -3,8 +3,8 @@
   <groupId>io.carrotquest</groupId>
   <artifactId>android-sdk</artifactId>
   <versioning>
-    <latest>1.0.94-usRelease</latest>
-    <release>1.0.94-usRelease</release>
+    <latest>1.0.96-usRelease</latest>
+    <release>1.0.96-usRelease</release>
     <versions>
       <version>1.0.40-commonDebug</version>
       <version>1.0.40-commonRelease</version>
@@ -843,7 +843,79 @@
       <version>1.0.94-commonRelease</version>
       <version>1.0.94-usDebug</version>
       <version>1.0.94-usRelease</version>
+      <version>1.0.94.1-commonDebug</version>
+      <version>1.0.94.1-commonRelease</version>
+      <version>1.0.94.1-usDebug</version>
+      <version>1.0.94.1-usRelease</version>
+      <version>1.0.94.2-commonDebug</version>
+      <version>1.0.94.2-commonRelease</version>
+      <version>1.0.94.2-usDebug</version>
+      <version>1.0.94.2-usRelease</version>
+      <version>1.0.94.3-commonDebug</version>
+      <version>1.0.94.3-commonRelease</version>
+      <version>1.0.94.3-usDebug</version>
+      <version>1.0.94.3-usRelease</version>
+      <version>1.0.95-commonDebug</version>
+      <version>1.0.95-commonRelease</version>
+      <version>1.0.95-usDebug</version>
+      <version>1.0.95-usRelease</version>
+      <version>1.0.95.2-commonDebug</version>
+      <version>1.0.95.2-commonRelease</version>
+      <version>1.0.95.2-usDebug</version>
+      <version>1.0.95.2-usRelease</version>
+      <version>1.0.95.3-commonDebug</version>
+      <version>1.0.95.3-commonRelease</version>
+      <version>1.0.95.3-usDebug</version>
+      <version>1.0.95.3-usRelease</version>
+      <version>1.0.95.4-commonDebug</version>
+      <version>1.0.95.4-commonRelease</version>
+      <version>1.0.95.4-usDebug</version>
+      <version>1.0.95.4-usRelease</version>
+      <version>1.0.95.5-commonDebug</version>
+      <version>1.0.95.5-commonRelease</version>
+      <version>1.0.95.5-usDebug</version>
+      <version>1.0.95.5-usRelease</version>
+      <version>1.0.95.6-commonDebug</version>
+      <version>1.0.95.6-commonRelease</version>
+      <version>1.0.95.6-usDebug</version>
+      <version>1.0.95.6-usRelease</version>
+      <version>1.0.95.7-commonDebug</version>
+      <version>1.0.95.7-commonRelease</version>
+      <version>1.0.95.7-usDebug</version>
+      <version>1.0.95.7-usRelease</version>
+      <version>1.0.95.8-commonDebug</version>
+      <version>1.0.95.8-commonRelease</version>
+      <version>1.0.95.8-usDebug</version>
+      <version>1.0.95.8-usRelease</version>
+      <version>1.0.95.9-commonDebug</version>
+      <version>1.0.95.9-commonRelease</version>
+      <version>1.0.95.9-usDebug</version>
+      <version>1.0.95.9-usRelease</version>
+      <version>1.0.95.10-commonDebug</version>
+      <version>1.0.95.10-commonRelease</version>
+      <version>1.0.95.10-usDebug</version>
+      <version>1.0.95.10-usRelease</version>
+      <version>1.0.95.11-commonDebug</version>
+      <version>1.0.95.11-commonRelease</version>
+      <version>1.0.95.11-usDebug</version>
+      <version>1.0.95.11-usRelease</version>
+      <version>1.0.95.12-commonDebug</version>
+      <version>1.0.95.12-commonRelease</version>
+      <version>1.0.95.12-usDebug</version>
+      <version>1.0.95.12-usRelease</version>
+      <version>1.0.95.13-commonDebug</version>
+      <version>1.0.95.13-commonRelease</version>
+      <version>1.0.95.13-usDebug</version>
+      <version>1.0.95.13-usRelease</version>
+      <version>1.0.95.14-commonDebug</version>
+      <version>1.0.95.14-commonRelease</version>
+      <version>1.0.95.14-usDebug</version>
+      <version>1.0.95.14-usRelease</version>
+      <version>1.0.96-commonDebug</version>
+      <version>1.0.96-commonRelease</version>
+      <version>1.0.96-usDebug</version>
+      <version>1.0.96-usRelease</version>
     </versions>
-    <lastUpdated>20250418075220</lastUpdated>
+    <lastUpdated>20250605094412</lastUpdated>
   </versioning>
 </metadata>
