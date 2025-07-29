@@ -31,17 +31,17 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.98-usRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.99-usRelease'
 }
 ```
 
-Java 8 is used by the library. Add the following settings in case your project is using an older version of Java:
+Java 17 is used by the library. Add the following settings in case your project is using an older version of Java:
 ```groovy
 android {
     ...
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility '17'
+        targetCompatibility '17'
     }
 }
 ```
