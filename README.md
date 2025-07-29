@@ -31,11 +31,11 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.98-commonRelease'
+    implementation 'io.carrotquest:android-sdk:1.0.99-commonRelease'
 }
 ```
 
-Библиотека использует Java 8. Если ваш проект использует версию Java ниже 8, добавьте следующие настройки:
+Библиотека использует Java 17. Если ваш проект использует версию Java ниже 17, добавьте следующие настройки:
 ```groovy
 android {
     ...
