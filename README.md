@@ -1,3 +1,20 @@
+# Оглавление
+
+* [Carrot quest для Android](#carrot-quest-для-android)
+* [Установка](#установка)
+* [Обновление до версии 2.0.0](#обновление)
+* [Инициализация](#инициализация)
+* [Авторизация пользователей](#авторизация-пользователей)
+* [Свойства пользователей и события](#свойства-пользователей-и-события)
+* [Чат с оператором](#чат-с-оператором)
+   * [Плавающая кнопка (Floating Button)](#плавающая-кнопка-floating-button)
+   * [Открытие чата из произвольного места](#открытие-чата-из-произвольного-места)
+* [Уведомления](#уведомления)
+   * [Настройка Firebase Cloud Messaging](#настройка-firebase-cloud-messaging)
+   * [Настройка Huawei Push Kit](#настройка-huawei-push-kit)
+   * [Общие настройки уведомлений](#общие-настройки-уведомлений)
+
+
 ## Carrot quest для Android
 
 Carrot quest для Android поддерживает API 19 и выше.
@@ -31,7 +48,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.100-commonRelease'
+    implementation 'io.carrotquest:android-sdk:2.0.0-commonRelease'
 }
 ```
 
@@ -47,23 +64,60 @@ android {
 ```
 
 
+## Обновление
+Обратите внимание, что при переходе на версию 2.0.0 были внесены некоторые важные изменения в способ взаимодействия с библиотекой.
+
+Для унификации кода с iOS SDK, в методе инициализации библиотеки исчез один параметр - appId. Теперь, наилучший способ инициализировать библиотеку выглядит так:
+```kotlin
+Carrot.setup(this, yourApiKey, object : Carrot.Callback<Boolean> {
+    override fun onResponse(result: Boolean) {
+        
+    }
+
+    override fun onFailure(t: Throwable) {
+
+    }
+})
+```
+
+Если у вас есть авторизация пользователей, необходимо вызывать ее при старте приложения. Наилучшим местом для этого является onResponse колбэка у метода setup:
+```kotlin
+Carrot.setup(this, yourApiKey, object : Carrot.Callback<Boolean> {
+    override fun onResponse(result: Boolean) {
+        if(result) {
+            Carrot.auth(userId, userAuthKey, object : Carrot.Callback<String> {
+                override fun onResponse(result: String?) {
+                    
+                }
+
+                override fun onFailure(t: Throwable) {
+                    
+                }
+            })
+        }
+    }
+
+    override fun onFailure(t: Throwable) {
+
+    }
+})
+```
+Таким образом это предотвратит лишнее возникновение анонимных пользователей.
+
 ## Инициализация
 Для работы с Carrot quest для Android вам понадобится API Key и User Auth Key. Вы можете найти эти ключи на вкладке Настройки > Разработчикам:
 ![Api keys](https://github.com/carrotquest/android-sdk/blob/carrotquest/img/carrot_api_keys.png?raw=true)
 
 Для инициализации Carrot quest вам нужно выполнить следующий код в методе onCreate() вашего приложения:
 
-```java
-Carrot.setup(this, apiKey, appId);
-```
-или
-```java
-Carrot.setup(this, apiKey, appId, callback)
+
+```kotlin
+Carrot.setup(this, apiKey, callback)
 ```
 
 Для вывода дополнительной информации во время отладки используйте метод:
-```java
-Carrot.setDebug(true);
+```kotlin
+Carrot.setDebug(true)
 ```
 
 ## Авторизация пользователей
@@ -72,37 +126,39 @@ Carrot.setDebug(true);
 
 1. Вход через user auth key:
 
-```java
-Carrot.auth(userId, userAuthKey);
-```
-или
-```java
+
+```kotlin
 Carrot.auth(userId, userAuthKey, callback)
 ```
 
 2. Вход через hash:
 
-```java
-Carrot.hashedAuth(userId, hash);
-```
-или
-```java
+
+```kotlin
 Carrot.hashedAuth(userId, hash, callback)
 ```
 
-Чтобы сменить пользователя, нужно сначала вызвать метод деинициализации:
-```java
-Carrot.deInit()
+Чтобы сменить пользователя, нужно сначала вызвать метод деинициализации, а после завново вызвать методы ининциализации и (опционально) авторизации:
+```kotlin
+Carrot.deInit(object : Carrot.Callback<Boolean> {
+    override fun onResponse(result: Boolean) {
+        Carrot.setup(this, yourApiKey, callbackSetup)
+    }
+
+    override fun onFailure(t: Throwable) {
+        
+    }
+})
 ```
-а после завново вызвать методы ининциализации и (опционально) авторизации.
+
 
 
 ## Свойства пользователей и события
 
 Вы можете установить необходимые свойства пользователя с помощью
-```java
-Carrot.setUserProperty(userProperty);
-Carrot.setUserProperty(userPropertyList);
+```kotlin
+Carrot.setUserProperty(userProperty)
+Carrot.setUserProperty(userPropertyList)
 ```
 
 Для описания свойств пользователя используйте класс `UserProperty`
@@ -120,24 +176,24 @@ public UserProperty(Operation operation, String key, String value)
 Для установки [системных свойств](https://carrotquest.io/developers/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUserProperty`.
 
 Для отслеживания событий используйте
-```java
-Carrot.trackEvent(eventName);
+```kotlin
+Carrot.trackEvent(eventName)
 ```
 Вы можете указать дополнительные параметры для события в виде JSON-строки и передать их в метод
-```java
-Carrot.trackEvent(eventName, eventParams);
+```kotlin
+Carrot.trackEvent(eventName, eventParams)
 ```
 В SDK есть возможность трекинга навигации внутри приложения для того, чтобы при необходимости запускать различные триггерные сообщения на определенных экранах. Для этого используйте метод
-```java
-Carrot.trackScreen(screenName);
+```kotlin
+Carrot.trackScreen(screenName)
 ```
 Вы можете получить список идентификаторов непрочитанных на данный момент диалогов
-```java
- Carrot.getUnreadConversations();
+```kotlin
+ Carrot.getUnreadConversations()
 ```
 Также можно подписаться на изменения в списке идентификаторов непрочитанных диалогов
-```java
- Carrot.setUnreadConversationsCallback(callback);
+```kotlin
+ Carrot.setUnreadConversationsCallback(callback)
 ```
 
 ## Чат с оператором
@@ -224,42 +280,89 @@ public void setLocationFAB(LocationFAB location)
 
 ### Открытие чата из произвольного места
 Открыть чат можно также, вызвав из произвольного места (после инициализации) следующий код:
-```java
-Carrot.openChat(context);
+```kotlin
+Carrot.openChat(context)
 ```
 
-### Уведомления
-Для работы с уведомлениями SDK использует сервис Firebase Cloud Messaging. В связи с этим необходимо получить ключ и отправить его в Carrot. Вы можете найти поле для ввода ключа на вкладке Настройки > Разработчикам. Процесс настройки сервиса Firebase Cloud Messaging описан [здесь](https://firebase.google.com/docs/cloud-messaging?authuser=0)
+# Уведомления
 
-Если вы уже используете сервис Firebase Cloud Messaging для своих push-уведомлений, то для корректной работы push-уведомлений в SDK необходимо отредактировать вашу службу FirebaseMessagingService. Это необходимо для "прокидывания" токена и наших сообщений внутрь SDK. Пример:
-``` java
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    @Override
-    public void onNewToken(String token) {
-        Carrot.sendFcmToken(token);
-        super.onNewToken(token);
-    }
+SDK поддерживает два провайдера push-уведомлений - Firebase Cloud Messaging и HUAWEI
+Push Kit.
 
-    @Override
-    public void onMessageReceived (RemoteMessage remoteMessage) {
-        if (Carrot.isCarrotPush(remoteMessage)) {
-            Carrot.sendFirebasePushNotification(remoteMessage, this)
+## Настройка Firebase Cloud Messaging
+
+В первую очередь необходимо получить ключ и отправить его в Carrot. Вы можете найти
+поле для ввода ключа на вкладке Настройки > Разработчикам > Push-уведомления для SDK.
+Процесс настройки сервиса Firebase Cloud Messaging описан здесь
+
+Если вы уже используете сервис Firebase Cloud Messaging для своих push-уведомлений, то
+для корректной работы push-уведомлений в SDK необходимо отредактировать вашу службу
+FirebaseMessagingService. Это необходимо для "прокидывания" токена и наших сообщений
+внутрь SDK. Пример:
+
+```kotlin
+class MyFirebaseMessagingService : FirebaseMessagingService () {
+    override fun onMessageReceived (message: RemoteMessage) {
+        val pushData: Map<String, String> = message. data
+
+        if (Carrot.isCarrotPush(pushData)) {
+            Carrot.sendPushNotification(pushData, this)
         } else {
             //Your code
         }
     }
+
+    override fun onNewToken (token: String) {
+        Carrot.sendToken(token)
+        super .onNewToken(token)
+    }
 }
 ```
+## Настройка Huawei Push Kit
 
-Иконку и цвет уведомлений о новых сообщениях можно изменить.
-Для установки иконки на уведомления вызовете следующий метод после инициализации SDK:
-```java
+Чтобы уведомления доходили до пользователям с устройствами без Google-сервисов, можно
+использовать службу доставки push-уведомлений от Huawei. Для начала вам нужно
+интегрировать HPK в свое приложение. Как это слделать можно прочитать здесь. После
+этого на вкладке Настройки > Разработчикам > Push-уведомления для SDK нужно указать
+Client ID, Client Secret и Webhook Secret. Далее, внесите изменения в службу,
+унаследованную от HmsMessageService. Пример:
+
+```kotlin
+class MyHuaweiPushKitService : HmsMessageService () {
+    override fun onMessageReceived (remoteMessage: RemoteMessage?) {
+        val pushData: Map<String, String> = remoteMessage?.dataOfMap ?: HashMap()
+        if (Carrot.isCarrotPush(pushData)) {
+            Carrot.sendPushNotification(pushData, this )
+        } else {
+            //Your code
+        }
+    }
+
+    override fun onNewToken (token: String?) {
+        Carrot.sendToken(token);
+        super .onNewToken(token)
+    }
+
+    override fun onNewToken (token: String?, p1: Bundle?) {
+        Carrot.sendToken(token);
+        super .onNewToken(token, p1)
+    }
+}
+```
+## Общие настройки уведомлений
+
+Иконку и цвет уведомлений о новых сообщениях можно изменить. Для установки иконки на
+уведомления вызовете следующий метод после инициализации SDK:
+
+```
 Carrot.setNotificationIcon(R.drawable.ic_notificatrion_icon);
 ```
-Либо добавьте иконку с названием `ic_cq_notification.xml` в директорию `res/drawable`
-Для установки цвета уведомлений в файл ресурсов пропишите цвет с названием `colorCqNotify` и нужным вам значением:
-``` xml
- <color name="colorCqNotify">#EF7F28</color>
+Либо добавьте иконку с названием ic_cq_notification.xml в директорию res/drawable
+Для установки цвета уведомлений в файл ресурсов пропишите цвет с названием
+colorCqNotify и нужным вам значением:
+
+```
+<color name="colorCqNotify">#EF7F28</color>
 ```
 
 Если вы хотите из любого места вашего приложения получать информацию о новых сообщениях в SDK, то вы можете реализовать BroadcastReceiver. Пример реализации:
