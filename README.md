@@ -1,10 +1,27 @@
+# Table of Contents
+
+* [Dashly for Android](#dashly-for-android)
+* [Installation](#installation)
+* [Upgrade to Version 2.0.0](#upgrade)
+* [Initialization](#initialization)
+* [User Authentication](#user-authentication)
+* [User Properties and Events](#user-properties-and-events)
+* [Chat with Operator](#chat-with-operator)
+  * [Floating Button](#floating-button)
+  * [Opening Chat from Any Location](#opening-chat-from-any-location)
+* [Notifications](#notifications)
+  * [Firebase Cloud Messaging Setup](#firebase-cloud-messaging-setup)
+  * [Huawei Push Kit Setup](#huawei-push-kit-setup)
+  * [General Notification Settings](#general-notification-settings)
+
+
 ## Dashly for Android
 
-Dashly for Android supports API 16 and later.
+Dashly for Android supports API 19 and above.
 
-## Install
-At the moment Dashly for Android can be installed via gradle.
-Add `build.gradle` repository into project file:
+## Installation
+Currently, Dashly for Android can be installed using gradle. 
+To do this, add the repository to the project `build.gradle` file:
 ```groovy
 allprojects {
     ...
@@ -15,7 +32,7 @@ allprojects {
     }
 }
 ```
-Configure dependencies in your application's `build.gradle` file:
+Specify the dependencies in your application's `build.gradle` file:
 ```groovy
 android {
     ...
@@ -31,11 +48,11 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:1.0.100-usRelease'
+    implementation 'io.carrotquest:android-sdk:2.0.0-usRelease'
 }
 ```
 
-Java 17 is used by the library. Add the following settings in case your project is using an older version of Java:
+The library uses Java 17. If your project uses a Java version below 17, add the following settings:
 ```groovy
 android {
     ...
@@ -46,149 +63,198 @@ android {
 }
 ```
 
+## Upgrade
+Note that when transitioning to version 2.0.0, some important changes were made to the way you interact with the library.
+
+To unify the code with the iOS SDK, one parameter - appId - was removed from the library's initialization method. Now, the best way to initialize the library looks like this:
+```kotlin
+Dashly.setup(this, yourApiKey, object : Dashly.Callback<Boolean> {
+    override fun onResponse(result: Boolean) {
+        
+    }
+
+    override fun onFailure(t: Throwable) {
+
+    }
+})
+```
+
+If you have user authentication, make sure to call it at the start of the application. The best place for this is in the onResponse callback of the setup method:
+```kotlin
+Dashly.setup(this, yourApiKey, object : Dashly.Callback<Boolean> {
+    override fun onResponse(result: Boolean) {
+        if(result) {
+            Dashly.auth(userId, userAuthKey, object : Dashly.Callback<String> {
+                override fun onResponse(result: String?) {
+                    
+                }
+
+                override fun onFailure(t: Throwable) {
+                    
+                }
+            })
+        }
+    }
+
+    override fun onFailure(t: Throwable) {
+
+    }
+})
+```
+This will prevent unnecessary anonymous user occurrences.
 
 ## Initialization
-You'll need API Key and User Auth Key to work with Dashly for Android. Those can be found on Settings - Developers tab:
+To use Dashly for Android, you need the API Key and User Auth Key. You can find these keys in the Settings > Developers tab:
 ![Api keys](https://github.com/carrotquest/android-sdk/blob/dashly/img/dashly_api_keys.png?raw=true)
 
-You should run this code in your application's onCreate() method in order to initialize Dashly:
+To initialize Dashly, you need to execute the following code in your application's onCreate() method:
 
-```java
-Dashly.setup(this, apiKey, appId);
-```
-or
-```java
-Dashly.setup(this, apiKey, appId, callback)
+```kotlin
+Dashly.setup(this, apiKey, callback)
 ```
 
-Use this method to display additional info during debug process:
-```java
-Dashly.isDebug(true);
+To display additional information during debugging, use the method:
+```kotlin
+Dashly.setDebug(true)
 ```
 
-## User authorization
+## User Authentication
 
-In case your application has user authorization, you might want to send user id to Dashly. There are two ways of authorization: send userAuthKey directly, send hash generated at your backend. In the callback upon successful login, the value of the 'dashly_id' property will be returned.
+If your application includes user authentication, you can pass the user id to Dashly. There are two ways to authenticate: directly pass the userAuthKey, or send a hash generated on your backend. Upon successful login, the dashly_id property value is returned in the callback.
 
-1. Send userAuthKey directly
+1. Login via user auth key:
 
-```java
-Dashly.auth(userId, userAuthKey);
-```
-or
-```java
+```kotlin
 Dashly.auth(userId, userAuthKey, callback)
 ```
 
-2. Send hash generated at your backend
+2. Login via hash:
 
-```java
-Dashly.hashedAuth(userId, hash);
-```
-or
-```java
+```kotlin
 Dashly.hashedAuth(userId, hash, callback)
 ```
 
-## User properties and events
+To change the user, you need to first call the deinitialization method, and then re-call the initialization and (optionally) authentication methods:
+```kotlin
+Dashly.deInit(object : Dashly.Callback<Boolean> {
+    override fun onResponse(result: Boolean) {
+        Dashly.setup(this, yourApiKey, callbackSetup)
+    }
 
-You can set user properties, using this method:
-```java
-Dashly.setUserProperty(userProperty);
-Dashly.setUserProperty(userPropertyList);
+    override fun onFailure(t: Throwable) {
+        
+    }
+})
 ```
 
-`UserProperty` class should be used for user properties description
+## User Properties and Events
+
+You can set user properties using:
+```kotlin
+Dashly.setUserProperty(userProperty)
+Dashly.setUserProperty(userPropertyList)
+```
+
+To describe user properties, use the `UserProperty` class:
 ```java
 public UserProperty(String key, String value)
 public UserProperty(Operation operation, String key, String value)
 ```
-More info on `Operations` can be found in [«User properties»](/props#_3) section.
+For more details on `Operations`, please refer to the [«User Properties»](https://developers.dashly.io/props/#_3) section.
 
-`Important!`
+`Attention!`
 
-`key` field value should not start with `$`.
+The `key` field cannot start with the `$` symbol.
 
+For setting [system properties](https://developers.dashly.io/props#_4), two classes `CarrotUserProperty` and `EcommerceUserProperty` are implemented.
 
-`CarrotUserProperty` and `EcommerceUserProperty` classes should be used to set [system properties](/props#_4)
-
-Use the following method for events tracking:
-```java
-Dashly.trackEvent(eventName);
-```
-You can send additional event parameters as JSON string
-```java
-Dashly.trackEvent(eventName, eventParams);
-```
-The SDK provides the capability to track navigation within the application. This is necessary to trigger various messages on specific screens as needed. To achieve this, use the method:
-```java
-Dashly.trackScreen(screenName);
+To track events, use:
+```kotlin
+Dashly.trackEvent(eventName)
 ```
 
-You can subscribe to changes in the list of unread conversation identifiers.
-```java
- Carrot.setUnreadConversationsCallback(callback);
+You can specify additional parameters for an event in JSON format and pass them to the method:
+```kotlin
+Dashly.trackEvent(eventName, eventParams)
 ```
 
-## Live chat
-You can give your users an opportunity to start a live chat (with your operator) from anywhere. This can be done two ways - either by adding a floating button or by directly calling a chat
-openning method at desired moment.
+The SDK offers the ability to track navigation within the application to launch various trigger messages on specific screens if needed. Use the following method for this:
+```kotlin
+Dashly.trackScreen(screenName)
+```
+
+You can retrieve a list of identifiers for unread conversations at the moment:
+```kotlin
+Dashly.getUnreadConversations()
+```
+
+You can also subscribe to changes in the list of unread conversation identifiers:
+```kotlin
+Dashly.setUnreadConversationsCallback(callback)
+```
+
+## Chat with Operator
+
+You can give the mobile app user the ability to access the chat with an operator from anywhere. This can be accomplished in two ways—using a floating button or directly calling the chat opening method at any desired time.
 
 ### Floating Button
-This is an interface element inherited from `ConstraintLayout`. You can embed it in your markup:
-``` xml
+
+Essentially, this is a user interface element inheriting from `ConstraintLayout`. You can embed it into your layout:
+```xml
 <io.carrotquest_sdk.android.ui.fab.FloatingButton
-        android:id="@+id/cq_sdk_float_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cq_location_fab="BOTTOM_RIGHT"
-        app:cq_visibility_background="false"
-        app:cq_icon_fab="@drawable/ic_send"
-        app:cq_margin_fab="8dp"
-        app:cq_show_social_labels="false"
-        app:cq_auto_hide_fab="true"
+    android:id="@+id/cq_sdk_float_button"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cq_location_fab="BOTTOM_RIGHT"
+    app:cq_visibility_background="false"
+    app:cq_icon_fab="@drawable/ic_send"
+    app:cq_margin_fab="8dp"
+    app:cq_show_social_labels="false"
+    app:cq_auto_hide_fab="true"
 />
 ```
-This element has the following attributes:
-* `app:cq_location_fab` controls button location inside parent element. 4 options are available - `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`.  `BOTTOM_RIGHT` by default.
-* `app:cq_visibility_background` controlls fogging effect visibility on floating button tap. `true` by default.
-* `app:cq_icon_fab` floating button icon. `@id/ic_cq_message` by default.
-* `app:cq_margin_fab` controls floating button margins (inside parent element). `16dp` by default
-* `app:cq_show_social` labels is responsible for text labels near the social network buttons. True by default.
-* `app:cq_auto_hide_fab` is responsible for automatic hiding of chat widget when there is no internet connection. False by default.
 
-#### Floating button interface
-Available floating button behaviour configuration and control methods.
+This element has its own attributes:
+- `app:cq_location_fab` dictates the placement of the floating button relative to its parent container. There are 4 possible positions: `TOP_LEFT`, `TOP_RIGHT`, `BOTTOM_LEFT`, `BOTTOM_RIGHT`; default is `BOTTOM_RIGHT`.
+- `app:cq_visibility_background` controls the visibility of the dimming effect when the floating button is pressed. Default is `true`.
+- `app:cq_icon_fab` sets the icon for the floating button. Default is `@id/ic_cq_message`.
+- `app:cq_margin_fab` specifies the margins of the floating button relative to its parent container. Default is `16dp`.
+- `app:cq_show_social_labels` manages the visibility of labels next to social media icons. Default is `true`.
+- `app:cq_auto_hide_fab` determines automatic hiding of the chat button when the internet is unavailable. Default is `false`.
 
-``` java
+#### Floating Button Interface
+
+Available methods for configuring and managing the floating button's behavior:
+
+```java
 /**
- * Show floating button
+ * Show the floating button
  */
 public void showFab()
 ```
 
-``` java
+```java
 /**
- * Hide floating button
+ * Hide the floating button
  */
- public void hideFab()
+public void hideFab()
 ```
 
-``` java
+```java
 /**
- * Show integrations buttons
+ * Show integration buttons
  */
 public void expandMenu()
 ```
 
-``` java
+```java
 /**
- * Hide integrations buttons
+ * Hide integration buttons
  */
 public void collapseMenu()
 ```
 
-``` java
+```java
 /**
  * Set chat icon
  * @param iconFAB Icon
@@ -196,15 +262,15 @@ public void collapseMenu()
 public void setIconFAB(Drawable iconFAB)
 ```
 
-``` java
+```java
 /**
- * Set button margins (from screen borders)
+ * Set button margins from screen edges
  * @param margin Margin value
  */
 public void setMarginFAB(int margin)
 ```
 
-``` java
+```java
 /**
  * Set button location
  * @param location Button location
@@ -212,24 +278,111 @@ public void setMarginFAB(int margin)
 public void setLocationFAB(LocationFAB location)
 ```
 
+### Opening Chat from Any Location
 
-### Open chat from anywhere
-After initialization you can open chat from any place using thix method:
-```java
-Dashly.openChat(context);
+You can also open the chat by executing the following code from any location (post initialization):
+```kotlin
+Dashly.openChat(context)
 ```
 
-### Notfications
-SDK uses Firebase Cloud Messaging for sending notifications.  At the moment you are required to get a key and send it to our support. You can find an input for this key at "Settings" - "Developers" tab of Dashly admin panel. Cloud Messaging setup is described [here](https://firebase.google.com/docs/cloud-messaging?authuser=0)
+# Notifications
 
-Icon and new message notifications color can be altered.
-Name your icon `ic_cq_notification.xml` and put it into `res/drawable` directory to add the icon into notifications.
-Add `colorCqNotify` named color of required value into your resource file to setup notifications color:
-``` xml
- <color name="colorCqNotify">#EF7F28</color>
+The SDK supports two push notification providers - Firebase Cloud Messaging and Huawei Push Kit.
+
+## Firebase Cloud Messaging Setup
+
+First, you need to obtain a key and send it to Dashly. You can find the field for entering the key in Settings > Developers > Push notifications for SDK. The setup process for Firebase Cloud Messaging is described here.
+
+If you are already using Firebase Cloud Messaging for your push notifications, to ensure that push notifications work correctly in the SDK, you need to edit your FirebaseMessagingService. This is necessary to pass the token and our messages into the SDK. Example:
+
+```kotlin
+class MyFirebaseMessagingService : FirebaseMessagingService() {
+    override fun onMessageReceived(message: RemoteMessage) {
+        val pushData: Map<String, String> = message.data
+
+        if (Dashly.isDashlyPush(pushData)) {
+            Dashly.sendPushNotification(pushData, this)
+        } else {
+            // Your code
+        }
+    }
+
+    override fun onNewToken(token: String) {
+        Dashly.sendToken(token)
+        super.onNewToken(token)
+    }
+}
 ```
 
-Important! If the app is closed and a user opens the live chat by clicking on the push, your starting activity won't start. The app will close along with the closure of the live chat. To fix this, you can pass the full name of the activity that should start when you close the live chat:
+## Huawei Push Kit Setup
+
+To deliver notifications to users with devices without Google services, you can use Huawei's push notification delivery service. First, you need to integrate HPK into your application. Instructions can be found here. Then, in Settings > Developers > Push notifications for SDK, you need to provide the Client ID, Client Secret, and Webhook Secret. Next, modify the service inherited from HmsMessageService. Example:
+
+```kotlin
+class MyHuaweiPushKitService : HmsMessageService() {
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        val pushData: Map<String, String> = remoteMessage?.dataOfMap ?: HashMap()
+        if (Dashly.isDashlyPush(pushData)) {
+            Dashly.sendPushNotification(pushData, this)
+        } else {
+            // Your code
+        }
+    }
+
+    override fun onNewToken(token: String?) {
+        Dashly.sendToken(token)
+        super.onNewToken(token)
+    }
+
+    override fun onNewToken(token: String?, p1: Bundle?) {
+        Dashly.sendToken(token)
+        super.onNewToken(token, p1)
+    }
+}
+```
+
+## General Notification Settings
+
+You can change the icon and color of notifications for new messages. To set the icon for notifications, call the following method after initializing the SDK:
+
+```kotlin
+Dashly.setNotificationIcon(R.drawable.ic_notification_icon)
+```
+
+Alternatively, add an icon named `ic_cq_notification.xml` in the `res/drawable` directory. To set the notification color, specify a color named `colorCqNotify` with your desired value in the resource file:
+
+```xml
+<color name="colorCqNotify">#EF7F28</color>
+```
+
+If you want to receive information about new messages in the SDK from anywhere in your application, you can implement a `BroadcastReceiver`. Example implementation:
+
 ```java
-Carrot.setParentActivityClassName("io.test.MainActivity");
+public class MyNewMessageBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if(intent.hasExtra(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ARG)) {
+            IncomingMessage incomingMessage = (IncomingMessage) intent.getSerializableExtra(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ARG);
+            if (incomingMessage != null) {
+                Toast.makeText(context, incomingMessage.getText(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+}
+```
+`IncomingMessage` is a class that describes the incoming message.
+
+Next, you need to register it:
+
+```java
+MyNewMessageBroadcastReceiver messageReceiver = new MyNewMessageBroadcastReceiver();
+IntentFilter filter = new IntentFilter();
+filter.addAction(NotificationsConstants.CQ_SDK_NEW_MESSAGE_ACTION);
+registerReceiver(messageReceiver, filter);
+```
+
+Important! If the application is closed and the user opens the chat by clicking a push, your start activity will not launch. The application will close along with the closure of the chat. To fix this, you can pass the full name of the activity that should launch when the chat is closed:
+
+```java
+Dashly.setParentActivityClassName("io.test.MainActivity");
 ```
