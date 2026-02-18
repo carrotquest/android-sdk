@@ -13,6 +13,7 @@
   * [Firebase Cloud Messaging Setup](#firebase-cloud-messaging-setup)
   * [Huawei Push Kit Setup](#huawei-push-kit-setup)
   * [General Notification Settings](#general-notification-settings)
+  * [Notifications unsubscribe method](#notifications-unsubscribe-method)
 
 
 ## Dashly for Android
@@ -48,7 +49,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:2.0.2-usRelease'
+    implementation 'io.carrotquest:android-sdk:2.0.3-usRelease'
 }
 ```
 
@@ -308,7 +309,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Dashly.sendToken(token)
+        Dashly.sendPushToken(token)
         super.onNewToken(token)
     }
 }
@@ -330,12 +331,12 @@ class MyHuaweiPushKitService : HmsMessageService() {
     }
 
     override fun onNewToken(token: String?) {
-        Dashly.sendToken(token)
+        Dashly.sendPushToken(token)
         super.onNewToken(token)
     }
 
     override fun onNewToken(token: String?, p1: Bundle?) {
-        Dashly.sendToken(token)
+        Dashly.sendPushToken(token)
         super.onNewToken(token, p1)
     }
 }
@@ -385,4 +386,20 @@ Important! If the application is closed and the user opens the chat by clicking 
 
 ```java
 Dashly.setParentActivityClassName("io.test.MainActivity");
+```
+
+## Notifications unsubscribe method
+
+There are methods to unsubscribe a particular user from fluff and from all mailings in principle.
+
+A method for unsubscribing from push:
+
+```kotlin
+Dashly.pushNotificationsUnsubscribe()
+```
+
+A method for unsubscribing from all push campaigns:
+
+```kotlin
+Dashly.pushCampaignsUnsubscribe()
 ```
