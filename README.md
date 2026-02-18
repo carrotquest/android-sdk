@@ -13,6 +13,7 @@
    * [Настройка Firebase Cloud Messaging](#настройка-firebase-cloud-messaging)
    * [Настройка Huawei Push Kit](#настройка-huawei-push-kit)
    * [Общие настройки уведомлений](#общие-настройки-уведомлений)
+   * [Метод отписки от пушей](#метод-отписки-от-пушей)
 
 
 ## Carrot quest для Android
@@ -48,7 +49,7 @@ android {
 dependencies {
     ...
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:2.0.2-commonRelease'
+    implementation 'io.carrotquest:android-sdk:2.0.3-commonRelease'
 }
 ```
 
@@ -313,7 +314,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService () {
     }
 
     override fun onNewToken (token: String) {
-        Carrot.sendToken(token)
+        Carrot.sendPushToken(token)
         super .onNewToken(token)
     }
 }
@@ -339,12 +340,12 @@ class MyHuaweiPushKitService : HmsMessageService () {
     }
 
     override fun onNewToken (token: String?) {
-        Carrot.sendToken(token);
+        Carrot.sendPushToken(token);
         super .onNewToken(token)
     }
 
     override fun onNewToken (token: String?, p1: Bundle?) {
-        Carrot.sendToken(token);
+        Carrot.sendPushToken(token);
         super .onNewToken(token, p1)
     }
 }
@@ -392,4 +393,20 @@ registerReceiver(messageReceiver, filter);
 Важно! Если приложение закрыто и пользователь откроет чат по нажатию на пуш, то ваша стартовая активность не запустится. Приложение закроется вместе с закрытием чата. Чтобы исправить это, вы можете передать полное имя активности, которая должна запуститься при закрытии чата:
 ```java
 Carrot.setParentActivityClassName("io.test.MainActivity");
+```
+
+## Метод отписки от пушей
+
+Существуют методы отписать конкретного пользователя от пушей и от всех рассылок в принципе. 
+
+Метод для отписки от пушей:
+
+```kotlin
+Carrot.pushNotificationsUnsubscribe()
+```
+
+Метод для отписки от всех рассылок:
+
+```kotlin
+Carrot.pushCampaignsUnsubscribe()
 ```
