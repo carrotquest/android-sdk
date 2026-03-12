@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import io.carrotquest.sample.R
 import io.carrotquest.sample.constants.USER_AUTH_KEY_SP
+import io.carrotquest.sample.databinding.ActivityStartBinding
 import io.carrotquest.sample.input_data.view.InputDataActivity
 import io.carrotquest.sample.main.view.MainActivity
 import io.carrotquest.sample.start.presenter.StartPresenter
@@ -13,11 +13,13 @@ import io.carrotquest.sample.utils.SharedPreferencesUtil
 
 class StartActivity : AppCompatActivity(), IStartView {
 
+    private lateinit var binding: ActivityStartBinding
     private val presenter = StartPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
+        binding = ActivityStartBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onResume() {

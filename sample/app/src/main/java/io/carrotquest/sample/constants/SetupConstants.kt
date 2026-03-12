@@ -1,12 +1,13 @@
 package io.carrotquest.sample.constants
 
 /**
- * Добавьте сюда свои данные для авторизации. Их можно найти на странице для разработчиков -
- * https://carrotquest.io/panel/XYZ/settings/developers, где XYZ - идентификатор вашего аппа
+ * Add your authentication data here. You can find them on the developers page -
+ * https://dashly.io/panel/XYZ/settings/developers, where XYZ is your app's identifier.
  *
- * Также эти данные можно указать и при первом запуске данного демонстрационного приложения
+ * You can also specify this data during the first launch of this demo application.
  */
 
+
+
 const val API_KEY = ""
-const val APP_ID = ""
 const val USER_AUTH_KEY = ""

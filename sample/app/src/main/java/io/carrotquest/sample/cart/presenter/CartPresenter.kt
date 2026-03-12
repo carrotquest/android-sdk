@@ -2,7 +2,7 @@ package io.carrotquest.sample.cart.presenter
 
 import io.carrotquest.sample.cart.view.ICartView
 import io.carrotquest.sample.model.MainCartModel
-import io.carrotquest_sdk.android.Carrot
+import io.carrotquest_sdk.android.Dashly
 
 class CartPresenter(private var view: ICartView?) {
 
@@ -16,7 +16,7 @@ class CartPresenter(private var view: ICartView?) {
     }
 
     fun onTabBuy() {
-        Carrot.trackEvent("Товары были куплены", "{\"Count\":\"${MainCartModel.getInstance().getProducts().size}\"}")
+        Dashly.trackEvent("Товары были куплены", "{\"Count\":\"${MainCartModel.getInstance().getProducts().size}\"}")
         view?.showSuccess()
         MainCartModel.getInstance().removeAll()
         view?.close()

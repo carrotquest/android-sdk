@@ -2,7 +2,7 @@ package io.carrotquest.sample.service
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import io.carrotquest_sdk.android.Carrot
+import io.carrotquest_sdk.android.Dashly
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     /**
@@ -11,13 +11,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         //Определяем, является ли сообщение сообщением от сервиса Carrot quest
-        if (Carrot.isCarrotPush(remoteMessage)) {
-            Carrot.sendFirebasePushNotification(remoteMessage, this)
+        if (Dashly.isCarrotPush(remoteMessage)) {
+            Dashly.sendFirebasePushNotification(remoteMessage, this)
 
             //Кроме прочего, можно определить является ли это сообщение автосообщением, если,
             // например, вы не хотите показывать их, а показывать только
             // уведомления для пушей из чата поддержки
-            if (Carrot.isAutoMessage(remoteMessage)) {
+            if (Dashly.isAutoMessage(remoteMessage)) {
                 //do something
             }
         }

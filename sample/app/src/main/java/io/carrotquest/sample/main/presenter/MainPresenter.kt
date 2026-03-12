@@ -10,7 +10,7 @@ import io.carrotquest.sample.data.getDemoData
 import io.carrotquest.sample.main.view.IMainView
 import io.carrotquest.sample.model.MainCartModel
 import io.carrotquest.sample.utils.SharedPreferencesUtil
-import io.carrotquest_sdk.android.Carrot
+import io.carrotquest_sdk.android.Dashly
 import io.carrotquest_sdk.android.core.main.CarrotSDK
 import java.util.*
 
@@ -18,13 +18,13 @@ class MainPresenter(private var view: IMainView?) {
 
     fun onCreate(userAuthKey: String?, userId: String) {
         if (!userAuthKey.isNullOrEmpty()) {
-            Carrot.auth(userId, userAuthKey, object : CarrotSDK.Callback<Boolean> {
+            Dashly.auth(userId, userAuthKey, object : CarrotSDK.Callback<String> {
                 override fun onFailure(p0: Throwable?) {
                     view?.showAuthError()
                 }
 
-                override fun onResponse(resAuth: Boolean) {
-                    if (!resAuth) {
+                override fun onResponse(userId: String) {
+                    if (userId.isEmpty()) {
                         view?.showAuthError()
                     }
                 }
@@ -46,8 +46,8 @@ class MainPresenter(private var view: IMainView?) {
 
     fun onTapCart(context: Context) {
         val selectedProducts = MainCartModel.getInstance().getProducts()
-        if (selectedProducts.size > 0) {
-            Carrot.trackEvent(
+        if (selectedProducts.isNotEmpty()) {
+            Dashly.trackEvent(
                 "Переход в корзину",
                 "{\"Количество товаров\":\"${selectedProducts.size}\"}"
             )
@@ -55,12 +55,12 @@ class MainPresenter(private var view: IMainView?) {
             context.startActivity(intent)
         } else {
             view?.showEmptyCartError()
-            Carrot.trackEvent("Попытка перейти в пустую корзину")
+            Dashly.trackEvent("Попытка перейти в пустую корзину")
         }
     }
 
     fun openChat(context: Context) {
-        Carrot.openChat(context)
+        Dashly.openChat(context)
     }
 
     fun openAuth() {
@@ -103,7 +103,7 @@ class MainPresenter(private var view: IMainView?) {
     }
 
     fun drawerOpened(context: Context) {
-        val unreadConversationsCount = Carrot.getUnreadConversations().size
+        val unreadConversationsCount = Dashly.getUnreadConversations().size
         val title = if (unreadConversationsCount > 0) {
             context.getString(R.string.open_chat_str) + " (${unreadConversationsCount})"
         } else {
@@ -114,7 +114,7 @@ class MainPresenter(private var view: IMainView?) {
     }
 
     fun onLogout(context: Context) {
-        Carrot.deInit()
+        Dashly.deInit()
         view?.updateSupportItemTitle(context.getString(R.string.open_chat_str) )
     }
 }

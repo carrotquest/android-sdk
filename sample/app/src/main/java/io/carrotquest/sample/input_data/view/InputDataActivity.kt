@@ -4,36 +4,38 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import io.carrotquest.sample.R
 import io.carrotquest.sample.constants.USER_AUTH_KEY_SP
+import io.carrotquest.sample.databinding.ActivityInputDataBinding
 import io.carrotquest.sample.input_data.presenter.InputDataPresenter
 import io.carrotquest.sample.main.view.MainActivity
 import io.carrotquest.sample.utils.SharedPreferencesUtil
-import kotlinx.android.synthetic.main.activity_input_data.*
 import kotlin.system.exitProcess
 
 class InputDataActivity: AppCompatActivity(), IInputDataView {
+    private lateinit var binding: ActivityInputDataBinding
     private val presenter = InputDataPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_data)
+        binding = ActivityInputDataBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        connect_btn.setOnClickListener {
+        binding.connectBtn.setOnClickListener {
             presenter.onTryConnect(
                 this,
-                app_id_et.text.toString(),
-                api_key_et.text.toString(),
-                user_auth_key_et.text.toString()
+                binding.apiKeyEt.text.toString(),
+                binding.userAuthKeyEt.text.toString()
             )
         }
-    }
 
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        presenter.onBack()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                presenter.onBack()
+            }
+        })
     }
 
     override fun close() {
@@ -58,10 +60,10 @@ class InputDataActivity: AppCompatActivity(), IInputDataView {
     }
 
     override fun showProgress() {
-        connect_pb.visibility = View.VISIBLE
+        binding.connectPb.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        connect_pb.visibility = View.GONE
+        binding.connectPb.visibility = View.GONE
     }
 }

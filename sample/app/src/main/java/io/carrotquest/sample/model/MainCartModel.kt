@@ -1,6 +1,6 @@
 package io.carrotquest.sample.model
 
-import io.carrotquest_sdk.android.Carrot
+import io.carrotquest_sdk.android.Dashly
 import io.carrotquest_sdk.android.models.UserProperty
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,14 +27,14 @@ class MainCartModel private constructor() {
             products.add(product)
             addProductObservable.notifyObservers(product)
 
-            Carrot.setUserProperty(
+            Dashly.setUserProperty(
                 UserProperty(
                     UserProperty.Operation.UNION,
                     "\$cart_items",
                     product.name
                 )
             )
-            Carrot.setUserProperty(
+            Dashly.setUserProperty(
                 UserProperty(
                     UserProperty.Operation.ADD,
                     "\$cart_amount",
@@ -52,8 +52,8 @@ class MainCartModel private constructor() {
         products.remove(product)
         removeProductObservable.notifyObservers(product)
 
-        Carrot.setUserProperty(UserProperty(UserProperty.Operation.EXCLUDE,"\$cart_items", product.name))
-        Carrot.setUserProperty(UserProperty(UserProperty.Operation.ADD,"\$cart_amount", (-product.price.toInt()).toString()))
+        Dashly.setUserProperty(UserProperty(UserProperty.Operation.EXCLUDE,"\$cart_items", product.name))
+        Dashly.setUserProperty(UserProperty(UserProperty.Operation.ADD,"\$cart_amount", (-product.price.toInt()).toString()))
     }
 
     fun addRemoveProductObserver(observer: Observer) {
