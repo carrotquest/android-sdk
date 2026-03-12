@@ -12,11 +12,10 @@ class StartPresenter(private var view: IStartView?) {
 
     fun onStart(context: Context) {
         val apiKey = SharedPreferencesUtil.getString(context, API_KEY_SP)
-        val appId = SharedPreferencesUtil.getString(context, APP_ID_SP)
         val userAuthKey = SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP)
 
-        if (apiKey.isNotEmpty() && appId.isNotEmpty() && userAuthKey.isNotEmpty()) {
-            Carrot.setup(context, apiKey, appId, object : CarrotSDK.Callback<Boolean> {
+        if (apiKey.isNotEmpty() && userAuthKey.isNotEmpty()) {
+            Carrot.setup(context, apiKey, object : CarrotSDK.Callback<Boolean> {
                 override fun onFailure(p0: Throwable?) {
                     view?.showConnectError()
                     view?.openSetApiKey()
@@ -31,8 +30,8 @@ class StartPresenter(private var view: IStartView?) {
                     }
                 }
             })
-        } else if (API_KEY.isNotEmpty() && APP_ID.isNotEmpty() && USER_AUTH_KEY.isNotEmpty()) {
-            Carrot.setup(context, API_KEY, APP_ID, object : CarrotSDK.Callback<Boolean> {
+        } else if (API_KEY.isNotEmpty() && USER_AUTH_KEY.isNotEmpty()) {
+            Carrot.setup(context, API_KEY,  object : CarrotSDK.Callback<Boolean> {
                 override fun onFailure(p0: Throwable?) {
                     view?.showConnectError()
                 }

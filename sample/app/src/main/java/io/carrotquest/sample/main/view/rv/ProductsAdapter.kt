@@ -4,16 +4,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import io.carrotquest.sample.R
+import io.carrotquest.sample.databinding.ProductViewHolderBinding
 import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest.sample.main.view.MainActivity
 import io.carrotquest.sample.product.view.ProductActivity
 import io.carrotquest_sdk.android.Carrot
-import kotlinx.android.synthetic.main.product_view_holder.view.*
 
 class ProductsAdapter(private val activity: AppCompatActivity): RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
@@ -26,9 +24,8 @@ class ProductsAdapter(private val activity: AppCompatActivity): RecyclerView.Ada
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val v: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.product_view_holder, parent, false)
-        return ProductViewHolder(v, activity)
+        val binding = ProductViewHolderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ProductViewHolder(binding, activity)
     }
 
     override fun getItemCount(): Int = items.size
@@ -39,17 +36,17 @@ class ProductsAdapter(private val activity: AppCompatActivity): RecyclerView.Ada
         }
     }
 
-    inner class ProductViewHolder(private val v: View, private val activity: AppCompatActivity): RecyclerView.ViewHolder(v), View.OnClickListener {
+    inner class ProductViewHolder(private val binding: ProductViewHolderBinding, private val activity: AppCompatActivity): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private var product: ProductEntity? = null
         fun bind(product: ProductEntity) {
             this.product = product
-            v.setOnClickListener(this)
-            v.product_name_tv.text = product.name
-            v.product_price_tv.text = "\u20BD %.2f".format(product.price)
+            binding.root.setOnClickListener(this)
+            binding.productNameTv.text = product.name
+            binding.productPriceTv.text = "\u20BD %.2f".format(product.price)
             Glide
-                .with(v)
+                .with(binding.root)
                 .load(product.imageUri)
-                .into(v.product_image_iv as ImageView)
+                .into(binding.productImageIv)
         }
 
         override fun onClick(v: View?) {
@@ -57,7 +54,6 @@ class ProductsAdapter(private val activity: AppCompatActivity): RecyclerView.Ada
             val intent = Intent(activity, ProductActivity::class.java)
             intent.putExtra(ProductActivity.PRODUCT_ARG, product)
             activity.startActivityForResult(intent, MainActivity.REQ_CODE)
-
         }
     }
 }

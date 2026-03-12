@@ -7,7 +7,7 @@ fun getDemoData() : ArrayList<ProductEntity> {
     val p1 = ProductEntity(
         name = "Nike Air Force 1 '07 LV8 1",
         description = "Кроссовки Nike Air Force 1 '07 LV8 1 получили все характеристики вдохновленной баскетболом оригинальной модели 1982 года и свежие детали дизайна для изящного стиля.",
-        imageUri = "https://static.street-beat.ru/upload/iblock/0e5/0e590ceb72712f7dcc227d1786a7b463.jpg",
+        imageUri = "https://cdn.sneakerbaron.nl/uploads/2022/10/10095952/Nike-Air-Force-1-07-LV8-Wit-DQ7658-100-700x700.png",
         price = 8990.0f
     )
     data.add(p1)
@@ -23,7 +23,7 @@ fun getDemoData() : ArrayList<ProductEntity> {
     val p3 = ProductEntity(
         name = "Nike Kyrie Flytrap 5",
         description = "Движения Кайри настолько резкие и быстрые, что кажется, будто остальные игроки застыли на месте. Кроссовки Kyrie Flytrap 5 обеспечивают превосходное сцепление не только под стопой, но и по бокам, что позволяет резко менять направление движения.Новая блестящая модель Flytrap с дизайном от Кайри дополнена фиксирующими ремешками и подушкой Zoom Air в передней части стопы.",
-        imageUri = "https://static.street-beat.ru/upload/iblock/5cc/5cc205fbed4f0788f5554af56ac15c9d.jpg",
+        imageUri = "https://i.ebayimg.com/images/g/UfIAAOSwxGpjgjnH/s-l1200.png",
         price = 10_899.0f
     )
     data.add(p3)
@@ -31,7 +31,7 @@ fun getDemoData() : ArrayList<ProductEntity> {
     val p4 = ProductEntity(
         name = "Converse Chuck 70 Plant Love",
         description = "Приземленные цвета и благодарность исходят от Chuck 70, окутывая этот веселый образ приятной атмосферой. Графика, вдохновленная матерью-природой, охватывает верх из хлопкового холста, а классические полосы на средней подошве, резиновый бампер на носке и резиновый носок делают этот стиль частью наследия Converse. Современные обновления, такие как стелька OrthoLite и строчка в виде крыльев на язычке, обеспечивают комфорт.\n",
-        imageUri = "https://static.street-beat.ru/upload/iblock/274/274652ac38cc7a16ec4d90766ddd02bc.jpg",
+        imageUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8Nq7G53nccuWM8pMGdL0V7SyiRnktt4aopg&s",
         price = 16_199.0f
     )
     data.add(p4)
@@ -47,7 +47,7 @@ fun getDemoData() : ArrayList<ProductEntity> {
     val p6 = ProductEntity(
         name = "Jordan Max Aura 3",
         description = "Jordan Max Aura 3 — это твоя часть наследия и истории Jordan. Вдохновленная богатым наследием баскетбольного бренда эта модель передает мощную энергетику игровых кроссовок и предстает в свежем дизайне на основе классических деталей",
-        imageUri = "https://static.street-beat.ru/upload/iblock/9bc/9bcd56d6beb4aa76cfd14e2ecb8dfee7.jpg",
+        imageUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOlN9DHDq7h3X3Nh5OrOoAFekb6obXceb8jA&s",
         price = 14_999.0f
     )
     data.add(p6)
@@ -55,7 +55,7 @@ fun getDemoData() : ArrayList<ProductEntity> {
     val p7 = ProductEntity(
         name = "PUMA CA Pro Re.Gen",
         description = "Классная и повседневная коллекция California, ставшая популярной в 80-х годах, уже давно пользуется успехом у поклонников кроссовок. Объединяя этот исторический силуэт Ca Pro с линейкой RE.GEN, построенной на принципах устойчивого развития (sustainability), конечный продукт становится не только гладким и стильным, но и полезным для человечества.",
-        imageUri = "https://static.street-beat.ru/upload/iblock/a1f/a1f9d097119d6b55b7d2c49b2d9f8d7c.JPG",
+        imageUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfp6tsuaKx1Sqs76b1S_UgrQLXYKeXALj4fA&s",
         price = 11_499.0f
     )
     data.add(p7)

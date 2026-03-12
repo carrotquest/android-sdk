@@ -1,17 +1,14 @@
 package io.carrotquest.sample.cart.view.rv
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import io.carrotquest.sample.R
+import io.carrotquest.sample.databinding.ProductInCartViewHolderBinding
 import io.carrotquest.sample.model.MainCartModel
 import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest_sdk.android.Carrot
-import kotlinx.android.synthetic.main.product_in_cart_view_holder.view.*
 
 class ProductsInCartAdapter(private val activity: AppCompatActivity): RecyclerView.Adapter<ProductsInCartAdapter.ProductInCartViewHolder>() {
 
@@ -25,14 +22,15 @@ class ProductsInCartAdapter(private val activity: AppCompatActivity): RecyclerVi
 
     fun removeProduct(product: ProductEntity) {
         val index = this.items.indexOf(product)
-        this.items.remove(product)
-        notifyItemRemoved(index)
+        if (index != -1) {
+            this.items.removeAt(index)
+            notifyItemRemoved(index)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductInCartViewHolder {
-        val v: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.product_in_cart_view_holder, parent, false)
-        return ProductInCartViewHolder(v, activity)
+        val binding = ProductInCartViewHolderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ProductInCartViewHolder(binding)
     }
 
     override fun getItemCount(): Int = items.size
@@ -43,21 +41,18 @@ class ProductsInCartAdapter(private val activity: AppCompatActivity): RecyclerVi
         }
     }
 
-    inner class ProductInCartViewHolder(private val v: View, private val activity: AppCompatActivity): RecyclerView.ViewHolder(v) {
-        private var product: ProductEntity? = null
+    inner class ProductInCartViewHolder(private val binding: ProductInCartViewHolderBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: ProductEntity) {
-            this.product = product
-            v.product_in_cart_name_tv.text = product.name
+            binding.productInCartNameTv.text = product.name
             Glide
-                .with(v)
+                .with(binding.root)
                 .load(product.imageUri)
-                .into(v.product_in_cart_iv as ImageView)
+                .into(binding.productInCartIv)
 
-            v.delete_product_btn.setOnClickListener {
-                Carrot.trackEvent("Товар был удален из корзины", "{\"Название\":\"${this.product?.name}\"}")
+            binding.deleteProductBtn.setOnClickListener {
+                Carrot.trackEvent("Товар был удален из корзины", "{\"Название\":\"${product.name}\"}")
                 MainCartModel.getInstance().removeProduct(product)
             }
         }
-
     }
 }

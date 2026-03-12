@@ -18,13 +18,13 @@ class MainPresenter(private var view: IMainView?) {
 
     fun onCreate(userAuthKey: String?, userId: String) {
         if (!userAuthKey.isNullOrEmpty()) {
-            Carrot.auth(userId, userAuthKey, object : CarrotSDK.Callback<Boolean> {
+            Carrot.auth(userId, userAuthKey, object : CarrotSDK.Callback<String> {
                 override fun onFailure(p0: Throwable?) {
                     view?.showAuthError()
                 }
 
-                override fun onResponse(resAuth: Boolean) {
-                    if (!resAuth) {
+                override fun onResponse(userId: String) {
+                    if (userId.isEmpty()) {
                         view?.showAuthError()
                     }
                 }
@@ -46,7 +46,7 @@ class MainPresenter(private var view: IMainView?) {
 
     fun onTapCart(context: Context) {
         val selectedProducts = MainCartModel.getInstance().getProducts()
-        if (selectedProducts.size > 0) {
+        if (selectedProducts.isNotEmpty()) {
             Carrot.trackEvent(
                 "Переход в корзину",
                 "{\"Количество товаров\":\"${selectedProducts.size}\"}"

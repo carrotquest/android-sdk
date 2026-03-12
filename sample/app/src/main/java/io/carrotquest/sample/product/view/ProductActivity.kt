@@ -2,18 +2,17 @@ package io.carrotquest.sample.product.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import io.carrotquest.sample.R
+import io.carrotquest.sample.databinding.ActivityProductBinding
 import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest.sample.main.view.MainActivity
 import io.carrotquest.sample.product.presenter.ProductPresenter
-import kotlinx.android.synthetic.main.activity_product.*
 
 class ProductActivity: AppCompatActivity(), IProductView {
 
+    private lateinit var binding: ActivityProductBinding
     private val presenter = ProductPresenter(this)
     private var product: ProductEntity? = null
 
@@ -23,12 +22,20 @@ class ProductActivity: AppCompatActivity(), IProductView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product)
+        binding = ActivityProductBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         product = intent.getParcelableExtra<ProductEntity>(PRODUCT_ARG)
         presenter.onStart(product)
 
-        buy_button.setOnClickListener {
+        binding.buyButton.setOnClickListener {
             presenter.onClickBuyButton(product)
         }
     }
@@ -40,22 +47,22 @@ class ProductActivity: AppCompatActivity(), IProductView {
     }
 
     override fun updateProductName(name: String) {
-        product_n_tv.text = name
+        binding.productNTv.text = name
     }
 
     override fun updateProductDescription(description: String) {
-        product_d_tv.text = description
+        binding.productDTv.text = description
     }
 
     override fun updateProductImage(imageUri: String) {
         Glide
             .with(this)
             .load(imageUri)
-            .into(product_iv as ImageView)
+            .into(binding.productIv)
     }
 
     override fun updatePrice(price: String) {
-        product_price_in_card_tv.text = price
+        binding.productPriceInCardTv.text = price
     }
 
     override fun showSuccessBuy() {

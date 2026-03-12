@@ -83,12 +83,11 @@ class AuthPresenter(private var view: IAuthView?) {
     }
 
     private fun initSdk(context: Context) {
-        val apiKey = if(SharedPreferencesUtil.getString(context, API_KEY_SP).isNotEmpty()) SharedPreferencesUtil.getString(context, API_KEY_SP) else API_KEY
-        val appId = if(SharedPreferencesUtil.getString(context, APP_ID_SP).isNotEmpty()) SharedPreferencesUtil.getString(context, APP_ID_SP) else APP_ID
-        val userAuthKey = if(SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP).isNotEmpty()) SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP) else USER_AUTH_KEY
+        val apiKey = SharedPreferencesUtil.getString(context, API_KEY_SP).ifEmpty { API_KEY }
+        val userAuthKey = SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP).ifEmpty { USER_AUTH_KEY }
 
-        if(apiKey.isNotEmpty() && appId.isNotEmpty() && userAuthKey.isNotEmpty()) {
-            Carrot.setup(context, apiKey, appId, object : CarrotSDK.Callback<Boolean>{
+        if(apiKey.isNotEmpty() && userAuthKey.isNotEmpty()) {
+            Carrot.setup(context, apiKey, object : CarrotSDK.Callback<Boolean>{
                 override fun onFailure(p0: Throwable?) {
 
                 }
@@ -103,16 +102,16 @@ class AuthPresenter(private var view: IAuthView?) {
     }
 
     private fun authSdk(context: Context) {
-        val userAuthKey = if(SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP).isNotEmpty()) SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP) else USER_AUTH_KEY
+        val userAuthKey = SharedPreferencesUtil.getString(context, USER_AUTH_KEY_SP).ifEmpty { USER_AUTH_KEY }
         if(userAuthKey.isNotEmpty()) {
             var userId = SharedPreferencesUtil.getString(context, USER_ID)
             if (userId.isEmpty()) {
                 userId = UUID.randomUUID().toString()
                 SharedPreferencesUtil.saveString(context, USER_ID, userId)
             }
-            Carrot.auth(userId, userAuthKey, object : CarrotSDK.Callback<Boolean>{
-                override fun onResponse(resAuth: Boolean?) {
-                    if(resAuth != null && resAuth) {
+            Carrot.auth(userId, userAuthKey, object : CarrotSDK.Callback<String>{
+                override fun onResponse(userId: String) {
+                    if(userId.isNotEmpty()) {
                         view?.close()
                     }
                 }

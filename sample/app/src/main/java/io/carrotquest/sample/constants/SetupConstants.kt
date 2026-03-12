@@ -8,5 +8,4 @@ package io.carrotquest.sample.constants
  */
 
 const val API_KEY = ""
-const val APP_ID = ""
 const val USER_AUTH_KEY = ""

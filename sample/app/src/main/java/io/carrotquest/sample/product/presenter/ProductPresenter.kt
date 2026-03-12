@@ -6,8 +6,6 @@ import io.carrotquest_sdk.android.Carrot
 import io.carrotquest_sdk.android.models.UserProperty
 
 class ProductPresenter(var view: IProductView?) {
-
-
     fun detachView() {
         this.view = null
     }

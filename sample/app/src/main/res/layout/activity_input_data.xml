@@ -27,18 +27,6 @@
             android:src="@drawable/ic_cq_logo" />
 
         <EditText
-            android:id="@+id/app_id_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/app_id_str" />
-
-        <EditText
             android:id="@+id/api_key_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

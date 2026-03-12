@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,20 +19,20 @@ import com.google.android.material.navigation.NavigationView
 import io.carrotquest.sample.R
 import io.carrotquest.sample.auth.view.AuthDialog
 import io.carrotquest.sample.constants.USER_ID
+import io.carrotquest.sample.databinding.ActivityMainBinding
+import io.carrotquest.sample.databinding.NavHeaderMainBinding
 import io.carrotquest.sample.main.presenter.MainPresenter
 import io.carrotquest.sample.main.view.rv.ProductsAdapter
 import io.carrotquest.sample.model.MainCartModel
 import io.carrotquest.sample.model.ProductEntity
 import io.carrotquest.sample.utils.SharedPreferencesUtil
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 import java.util.*
 import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, IMainView {
 
+    private lateinit var binding: ActivityMainBinding
     private val presenter = MainPresenter(this)
     private val adapter = ProductsAdapter(this)
 
@@ -40,16 +40,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        nav_view.setNavigationItemSelectedListener(this)
+        binding.navView.setNavigationItemSelectedListener(this)
 
         val layoutManager = GridLayoutManager(this, 2)
-        products_rv.layoutManager = layoutManager
-        products_rv.adapter = adapter
+        binding.productsRv.layoutManager = layoutManager
+        binding.productsRv.adapter = adapter
 
-        val toolbar = findViewById<Toolbar>(R.id.m_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.mToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         MainCartModel.getInstance().addAddProductObserver { _, arg ->
@@ -76,11 +76,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         presenter.onCreate(userAuthKey, userId)
 
-        open_nav_view_btn.setOnClickListener {
-            drawer_layout.openDrawer(GravityCompat.START)
+        binding.openNavViewBtn.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }
 
@@ -95,16 +95,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         })
 
-        products_rv.addOnScrollListener(object : OnScrollListener() {
+        binding.productsRv.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 presenter.onScrolled(dy)
             }
         })
 
-        nav_view.getHeaderView(0).image_profile_view.setOnClickListener {
+        val headerBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
+        headerBinding.imageProfileView.setOnClickListener {
             presenter.onTapProfile(this)
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    hideNavigationDrawer()
+                } else {
+                    presenter.onBack()
+                }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -135,17 +146,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         adapter.setData(products)
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            hideNavigationDrawer()
-        } else {
-            presenter.onBack()
-        }
-    }
-
     override fun hideNavigationDrawer() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
     }
 
@@ -202,20 +205,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.logout -> presenter.onLogout(this)
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     override fun hideFab() {
-        cq_fab.hide()
+        binding.cqFab.hide()
     }
 
     override fun showFab() {
-        cq_fab.show()
+        binding.cqFab.show()
     }
 
     override fun updateSupportItemTitle(title: String) {
-        val menuSupportItem = drawer_layout.nav_view.menu.findItem(R.id.open_support)
+        val menuSupportItem = binding.navView.menu.findItem(R.id.open_support)
         if (menuSupportItem != null) {
             menuSupportItem.title = title
         }
