@@ -3,3 +3,5 @@ sample/.gradle/
 sample/build/
 sample/app/build/
 sample/.idea/*
+
+sample/.idea/
