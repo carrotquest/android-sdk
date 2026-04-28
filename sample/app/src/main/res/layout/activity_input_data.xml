@@ -50,13 +50,12 @@
             android:layout_marginBottom="8dp"
             android:hint="User Auth Key" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/connect_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:background="@drawable/ripple_bkg"
             android:text="@string/connct_str" />
 
     </LinearLayout>
