@@ -37,10 +37,6 @@ Specify the dependencies in your application's `build.gradle` file:
 ```groovy
 android {
     ...
-    defaultConfig {
-        ...
-        multiDexEnabled true
-    }
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
     }
@@ -48,8 +44,7 @@ android {
 
 dependencies {
     ...
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation 'io.carrotquest:android-sdk:2.0.5-usRelease'
+    implementation 'io.carrotquest:android-sdk:2.1.0-usRelease'
 }
 ```
 
