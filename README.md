@@ -20,6 +20,8 @@
 
 Carrot quest для Android поддерживает API 19 и выше.
 
+Подробная документация по SDK доступна на [developers-sdk.carrotquest.io](https://developers-sdk.carrotquest.io).
+
 ## Установка
 На данный момент Carrot quest для Android можно установить с помощью gradle.
 Для этого добавьте репозиторий в `build.gradle` файле проекта:
@@ -44,7 +46,7 @@ android {
 
 dependencies {
     ...
-    implementation 'io.carrotquest:android-sdk:2.1.0-commonRelease'
+    implementation 'io.carrotquest:android-sdk:2.1.1-commonRelease'
 }
 ```
 
@@ -182,6 +184,17 @@ Carrot.trackEvent(eventName, eventParams)
 В SDK есть возможность трекинга навигации внутри приложения для того, чтобы при необходимости запускать различные триггерные сообщения на определенных экранах. Для этого используйте метод
 ```kotlin
 Carrot.trackScreen(screenName)
+```
+Для передачи UTM-меток из ссылки используйте
+```kotlin
+Carrot.trackUtm(url)
+```
+Метод извлекает UTM-параметры из строки запроса переданного URL, фиксирует их как события и устанавливает соответствующие свойства пользователя. Типичный сценарий использования — вызов метода при открытии приложения по диплинку:
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    intent?.data?.toString()?.let { Carrot.trackUtm(it) }
+}
 ```
 Вы можете получить список идентификаторов непрочитанных на данный момент диалогов
 ```kotlin
