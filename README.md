@@ -44,7 +44,7 @@ android {
 
 dependencies {
     ...
-    implementation 'io.carrotquest:android-sdk:2.1.0-usRelease'
+    implementation 'io.carrotquest:android-sdk:2.1.1-usRelease'
 }
 ```
 
@@ -177,6 +177,18 @@ Dashly.trackEvent(eventName, eventParams)
 The SDK offers the ability to track navigation within the application to launch various trigger messages on specific screens if needed. Use the following method for this:
 ```kotlin
 Dashly.trackScreen(screenName)
+```
+
+To pass UTM tags from a link, use:
+```kotlin
+Dashly.trackUtm(url)
+```
+The method extracts UTM parameters from the query string of the provided URL, records them as events, and sets the corresponding user properties. The typical use case is calling this method when the application is opened via a deep link:
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    intent?.data?.toString()?.let { Dashly.trackUtm(it) }
+}
 ```
 
 You can retrieve a list of identifiers for unread conversations at the moment:
