@@ -44,7 +44,7 @@ android {
 
 dependencies {
     ...
-    implementation 'io.carrotquest:android-sdk:2.1.1-usRelease'
+    implementation 'io.carrotquest:android-sdk:2.1.3-usRelease'
 }
 ```
 
