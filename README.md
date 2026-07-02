@@ -2,7 +2,7 @@
 
 * [Carrot quest для Android](#carrot-quest-для-android)
 * [Установка](#установка)
-* [Обновление до версии 2.0.0](#обновление)
+* [Обновление до версии 3.0.0](#обновление)
 * [Инициализация](#инициализация)
 * [Авторизация пользователей](#авторизация-пользователей)
 * [Свойства пользователей и события](#свойства-пользователей-и-события)
@@ -18,7 +18,7 @@
 
 ## Carrot quest для Android
 
-Carrot quest для Android поддерживает API 19 и выше.
+Carrot quest для Android поддерживает API 21 и выше.
 
 Подробная документация по SDK доступна на [developers-sdk.carrotquest.io](https://developers-sdk.carrotquest.io).
 
@@ -46,7 +46,7 @@ android {
 
 dependencies {
     ...
-    implementation 'io.carrotquest:android-sdk:2.1.3-commonRelease'
+    implementation 'io.carrotquest:android-sdk:3.0.0-commonRelease'
 }
 ```
 
@@ -63,44 +63,30 @@ android {
 
 
 ## Обновление
-Обратите внимание, что при переходе на версию 2.0.0 были внесены некоторые важные изменения в способ взаимодействия с библиотекой.
+Версия **3.0.0** — мажорное обновление с ломающими изменениями в публичном API. Что нужно учесть при обновлении:
 
-Для унификации кода с iOS SDK, в методе инициализации библиотеки исчез один параметр - appId. Теперь, наилучший способ инициализировать библиотеку выглядит так:
+* **Новая система логирования.** `setDebug(boolean)` / `isDebug()` удалены — уровень задаётся через `setLogLevel(SdkLogLevel)` со значениями `NONE`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `VERBOSE`. По умолчанию `NONE`: SDK не пишет в логи ничего, в том числе в release (раньше часть логов сыпалась всегда). Дополнительно можно получать записи логов прямо в своём коде через `setLogSink(...)` (например, прокинуть в свой логгер или крэш-репортер) и снимать одномоментный срез состояния для баг-репортов через `getDiagnostics()`. Чувствительные данные (токены, e-mail, идентификаторы) маскируются, пока не включён `setLogIncludeSensitive(true)`. Примеры использования — в разделе [«Инициализация»](#инициализация).
+* **Подписки на состояние удалены** (`addStateObserver` / `getStateFlow` / `addAuthStateObserver` / `getAuthStateFlow` / `addSessionExpiredObserver` / `getInitObservable`, а также модели `CarrotState` / `CarrotAuthState`). Восстановление сессии теперь автоматическое: результат операций берите из их `Callback`, а факт инициализации — из `Carrot.isInit()`.
+* **Отписка через `Cancellable`.** Методы подписки (например, `setUnreadConversationsCallback`) возвращают `Cancellable` — для отписки вызывайте `.cancel()`.
+* **`UserProperty` / `Operation` консолидированы.** `Operation` — единый enum `io.carrotquest_sdk.android.models.Operation` со значениями в `UPPER_CASE` (`set_once` → `SET_ONCE`, `update_or_create` → `UPDATE_OR_CREATE` и т.д.). Поле `UserProperty.operation` больше не публичное мутабельное — читается через `getOperation()`, класс стал неизменяемым.
+* **Тип колбэка `CarrotSDK.Callback` убран** → top-level `io.carrotquest_sdk.android.Callback<T>`; брендовые `Carrot.Callback` / `Dashly.Callback` сохранены как взаимозаменяемые подтипы.
+* **Push-хелперы — только `Map<String, String>`.** `RemoteMessage`-перегрузки и `sendFcmToken(...)` удалены — используйте `sendPushToken(token)` и Map-варианты (см. раздел [«Уведомления»](#уведомления)).
+
+Если в вашем приложении есть авторизация пользователей, вызывайте её при старте приложения — наилучшее место — `onResponse` колбэка `setup`. Это предотвратит лишнее возникновение анонимных пользователей:
 ```kotlin
 Carrot.setup(this, yourApiKey, object : Carrot.Callback<Boolean> {
     override fun onResponse(result: Boolean) {
-        
-    }
-
-    override fun onFailure(t: Throwable) {
-
-    }
-})
-```
-
-Если у вас есть авторизация пользователей, необходимо вызывать ее при старте приложения. Наилучшим местом для этого является onResponse колбэка у метода setup:
-```kotlin
-Carrot.setup(this, yourApiKey, object : Carrot.Callback<Boolean> {
-    override fun onResponse(result: Boolean) {
-        if(result) {
+        if (result) {
             Carrot.auth(userId, userAuthKey, object : Carrot.Callback<String> {
-                override fun onResponse(result: String?) {
-                    
-                }
-
-                override fun onFailure(t: Throwable) {
-                    
-                }
+                override fun onResponse(result: String?) { }
+                override fun onFailure(t: Throwable) { }
             })
         }
     }
 
-    override fun onFailure(t: Throwable) {
-
-    }
+    override fun onFailure(t: Throwable) { }
 })
 ```
-Таким образом это предотвратит лишнее возникновение анонимных пользователей.
 
 ## Инициализация
 Для работы с Carrot quest для Android вам понадобится API Key и User Auth Key. Вы можете найти эти ключи на вкладке Настройки > Разработчикам:
@@ -113,9 +99,18 @@ Carrot.setup(this, yourApiKey, object : Carrot.Callback<Boolean> {
 Carrot.setup(this, apiKey, callback)
 ```
 
-Для вывода дополнительной информации во время отладки используйте метод:
+Для вывода подробных логов SDK в logcat во время отладки задайте уровень логирования (по умолчанию `SdkLogLevel.NONE` — SDK не пишет в логи ничего):
 ```kotlin
-Carrot.setDebug(true)
+Carrot.setLogLevel(SdkLogLevel.DEBUG)   // выключить: Carrot.setLogLevel(SdkLogLevel.NONE)
+```
+Опционально можно получать записи логов в своём коде (например, прокинуть в свой логгер/крэш-репортер) и снять одномоментный срез состояния SDK для баг-репортов:
+```kotlin
+Carrot.setLogSink { entry -> myLogger.log(entry.category.toString() + " " + entry.message) }
+// чувствительные значения (токены/e-mail/идентификаторы) маскируются по умолчанию;
+// показать полностью (только для локальной отладки):
+Carrot.setLogIncludeSensitive(true)
+
+val report = Carrot.getDiagnostics().toFormattedString()
 ```
 
 ## Авторизация пользователей
@@ -159,28 +154,33 @@ Carrot.setUserProperty(userProperty)
 Carrot.setUserProperty(userPropertyList)
 ```
 
-Для описания свойств пользователя используйте класс `UserProperty`
+Для описания свойств пользователя используйте класс `UserProperty` (`io.carrotquest_sdk.android.models.UserProperty`):
 ```java
 public UserProperty(String key, String value)
 public UserProperty(Operation operation, String key, String value)
 ```
-Более подробно про `Operations` можно прочитать в разделе [«Cвойства пользователя»](https://carrotquest.io/developers/props/#_3).
+`Operation` — это enum `io.carrotquest_sdk.android.models.Operation` со значениями в `UPPER_CASE` (`UPDATE_OR_CREATE`, `SET_ONCE`, `ADD`, `DELETE`, `APPEND`, `UNION`, `EXCLUDE`). Более подробно про операции можно прочитать в разделе [«Cвойства пользователя»](https://carrotquest.io/developers/props/#_3).
 
 `Внимание!`
 
 Поле `key` не может начинаться с символа `$`.
 
 
-Для установки [системных свойств](https://carrotquest.io/developers/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUserProperty`.
+Для установки [системных свойств](https://carrotquest.io/developers/props#_4) реализовано 2 класса `CarrotUserProperty` и `EcommerceUserProperty` (пакет `io.carrotquest_sdk.android.models`).
 
 Для отслеживания событий используйте
 ```kotlin
 Carrot.trackEvent(eventName)
 ```
-Вы можете указать дополнительные параметры для события в виде JSON-строки и передать их в метод
+Вы можете указать дополнительные параметры для события. Соберите их типобезопасным билдером `EventParams` — SDK сам сериализует значения в JSON (передавать JSON-строку вручную больше не нужно):
 ```kotlin
-Carrot.trackEvent(eventName, eventParams)
+Carrot.trackEvent("purchase", EventParams.builder()
+    .put("item", "book")
+    .put("price", 9.99)
+    .put("gift", true)
+    .build())
 ```
+`put(...)` перегружен для `String`/`Int`/`Long`/`Double`/`Boolean`.
 В SDK есть возможность трекинга навигации внутри приложения для того, чтобы при необходимости запускать различные триггерные сообщения на определенных экранах. Для этого используйте метод
 ```kotlin
 Carrot.trackScreen(screenName)
@@ -196,9 +196,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
     intent?.data?.toString()?.let { Carrot.trackUtm(it) }
 }
 ```
-Вы можете получить список идентификаторов непрочитанных на данный момент диалогов
+Вы можете получить список идентификаторов непрочитанных на данный момент диалогов. Это единственный метод SDK, который бросает исключение (`CarrotException`), — вызывайте его в `try/catch`:
 ```kotlin
- Carrot.getUnreadConversations()
+ try {
+     val unread = Carrot.getUnreadConversations()
+ } catch (e: CarrotException) {
+     // SDK не инициализирован или пользователь недоступен
+ }
 ```
 Также можно подписаться на изменения в списке идентификаторов непрочитанных диалогов
 ```kotlin
