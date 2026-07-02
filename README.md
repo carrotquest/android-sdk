@@ -2,7 +2,7 @@
 
 * [Dashly for Android](#dashly-for-android)
 * [Installation](#installation)
-* [Upgrade to Version 2.0.0](#upgrade)
+* [Upgrade to Version 3.0.0](#upgrade)
 * [Initialization](#initialization)
 * [User Authentication](#user-authentication)
 * [User Properties and Events](#user-properties-and-events)
@@ -18,10 +18,12 @@
 
 ## Dashly for Android
 
-Dashly for Android supports API 19 and above.
+Dashly for Android supports API 21 and above.
+
+Detailed SDK documentation is available at [developers.dashly.io](https://developers.dashly.io).
 
 ## Installation
-Currently, Dashly for Android can be installed using gradle. 
+Currently, Dashly for Android can be installed using gradle.
 To do this, add the repository to the project `build.gradle` file:
 ```groovy
 allprojects {
@@ -44,7 +46,7 @@ android {
 
 dependencies {
     ...
-    implementation 'io.carrotquest:android-sdk:2.1.3-usRelease'
+    implementation 'io.carrotquest:android-sdk:3.0.0-usRelease'
 }
 ```
 
@@ -60,44 +62,30 @@ android {
 ```
 
 ## Upgrade
-Note that when transitioning to version 2.0.0, some important changes were made to the way you interact with the library.
+Version **3.0.0** is a major update with breaking changes to the public API. What to take into account when upgrading:
 
-To unify the code with the iOS SDK, one parameter - appId - was removed from the library's initialization method. Now, the best way to initialize the library looks like this:
+* **New logging system.** `setDebug(boolean)` / `isDebug()` are removed — the level is set via `setLogLevel(SdkLogLevel)` with the values `NONE`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `VERBOSE`. The default is `NONE`: the SDK writes nothing to the logs, including in release builds (previously some logs were always emitted). Additionally, you can receive log records directly in your own code via `setLogSink(...)` (for example, forward them to your logger or crash reporter) and take a point-in-time snapshot of the SDK state for bug reports via `getDiagnostics()`. Sensitive data (tokens, e-mails, identifiers) is masked until `setLogIncludeSensitive(true)` is called. Usage examples are in the [«Initialization»](#initialization) section.
+* **State subscriptions removed** (`addStateObserver` / `getStateFlow` / `addAuthStateObserver` / `getAuthStateFlow` / `addSessionExpiredObserver` / `getInitObservable`, as well as the `DashlyState` / `DashlyAuthState` models). Session recovery is now automatic: take operation results from their `Callback`, and the initialization status from `Dashly.isInit()`.
+* **Unsubscribe via `Cancellable`.** Subscription methods (for example, `setUnreadConversationsCallback`) return a `Cancellable` — call `.cancel()` to unsubscribe.
+* **`UserProperty` / `Operation` consolidated.** `Operation` is a single enum `io.carrotquest_sdk.android.models.Operation` with `UPPER_CASE` values (`set_once` → `SET_ONCE`, `update_or_create` → `UPDATE_OR_CREATE`, etc.). The `UserProperty.operation` field is no longer a public mutable field — it is read via `getOperation()`, and the class is now immutable.
+* **The `CarrotSDK.Callback` callback type is removed** → top-level `io.carrotquest_sdk.android.Callback<T>`; the branded `Carrot.Callback` / `Dashly.Callback` are kept as interchangeable subtypes.
+* **Push helpers accept only `Map<String, String>`.** The `RemoteMessage` overloads and `sendFcmToken(...)` are removed — use `sendPushToken(token)` and the Map variants (see the [«Notifications»](#notifications) section).
+
+If your application has user authentication, call it at the start of the application — the best place is the `onResponse` callback of `setup`. This prevents unnecessary anonymous user occurrences:
 ```kotlin
 Dashly.setup(this, yourApiKey, object : Dashly.Callback<Boolean> {
     override fun onResponse(result: Boolean) {
-        
-    }
-
-    override fun onFailure(t: Throwable) {
-
-    }
-})
-```
-
-If you have user authentication, make sure to call it at the start of the application. The best place for this is in the onResponse callback of the setup method:
-```kotlin
-Dashly.setup(this, yourApiKey, object : Dashly.Callback<Boolean> {
-    override fun onResponse(result: Boolean) {
-        if(result) {
+        if (result) {
             Dashly.auth(userId, userAuthKey, object : Dashly.Callback<String> {
-                override fun onResponse(result: String?) {
-                    
-                }
-
-                override fun onFailure(t: Throwable) {
-                    
-                }
+                override fun onResponse(result: String?) { }
+                override fun onFailure(t: Throwable) { }
             })
         }
     }
 
-    override fun onFailure(t: Throwable) {
-
-    }
+    override fun onFailure(t: Throwable) { }
 })
 ```
-This will prevent unnecessary anonymous user occurrences.
 
 ## Initialization
 To use Dashly for Android, you need the API Key and User Auth Key. You can find these keys in the Settings > Developers tab:
@@ -109,9 +97,18 @@ To initialize Dashly, you need to execute the following code in your application
 Dashly.setup(this, apiKey, callback)
 ```
 
-To display additional information during debugging, use the method:
+To print detailed SDK logs to logcat during debugging, set the log level (the default is `SdkLogLevel.NONE` — the SDK writes nothing to the logs):
 ```kotlin
-Dashly.setDebug(true)
+Dashly.setLogLevel(SdkLogLevel.DEBUG)   // to turn off: Dashly.setLogLevel(SdkLogLevel.NONE)
+```
+Optionally, you can receive log records in your own code (for example, forward them to your logger/crash reporter) and take a point-in-time snapshot of the SDK state for bug reports:
+```kotlin
+Dashly.setLogSink { entry -> myLogger.log(entry.category.toString() + " " + entry.message) }
+// sensitive values (tokens/e-mails/identifiers) are masked by default;
+// show them in full (for local debugging only):
+Dashly.setLogIncludeSensitive(true)
+
+val report = Dashly.getDiagnostics().toFormattedString()
 ```
 
 ## User Authentication
@@ -151,34 +148,37 @@ Dashly.setUserProperty(userProperty)
 Dashly.setUserProperty(userPropertyList)
 ```
 
-To describe user properties, use the `UserProperty` class:
+To describe user properties, use the `UserProperty` class (`io.carrotquest_sdk.android.models.UserProperty`):
 ```java
 public UserProperty(String key, String value)
 public UserProperty(Operation operation, String key, String value)
 ```
-For more details on `Operations`, please refer to the [«User Properties»](https://developers.dashly.io/props/#_3) section.
+`Operation` is the enum `io.carrotquest_sdk.android.models.Operation` with `UPPER_CASE` values (`UPDATE_OR_CREATE`, `SET_ONCE`, `ADD`, `DELETE`, `APPEND`, `UNION`, `EXCLUDE`). For more details on operations, please refer to the [«User Properties»](https://developers.dashly.io/props/#_3) section.
 
 `Attention!`
 
 The `key` field cannot start with the `$` symbol.
 
-For setting [system properties](https://developers.dashly.io/props#_4), two classes `CarrotUserProperty` and `EcommerceUserProperty` are implemented.
+For setting [system properties](https://developers.dashly.io/props#_4), two classes `CarrotUserProperty` and `EcommerceUserProperty` are implemented (package `io.carrotquest_sdk.android.models`).
 
 To track events, use:
 ```kotlin
 Dashly.trackEvent(eventName)
 ```
-
-You can specify additional parameters for an event in JSON format and pass them to the method:
+You can specify additional parameters for an event. Build them with the type-safe `EventParams` builder — the SDK serializes the values to JSON itself (you no longer need to pass a JSON string manually):
 ```kotlin
-Dashly.trackEvent(eventName, eventParams)
+Dashly.trackEvent("purchase", EventParams.builder()
+    .put("item", "book")
+    .put("price", 9.99)
+    .put("gift", true)
+    .build())
 ```
+`put(...)` is overloaded for `String`/`Int`/`Long`/`Double`/`Boolean`.
 
 The SDK offers the ability to track navigation within the application to launch various trigger messages on specific screens if needed. Use the following method for this:
 ```kotlin
 Dashly.trackScreen(screenName)
 ```
-
 To pass UTM tags from a link, use:
 ```kotlin
 Dashly.trackUtm(url)
@@ -190,15 +190,17 @@ override fun onCreate(savedInstanceState: Bundle?) {
     intent?.data?.toString()?.let { Dashly.trackUtm(it) }
 }
 ```
-
-You can retrieve a list of identifiers for unread conversations at the moment:
+You can retrieve a list of identifiers for the conversations that are currently unread. This is the only SDK method that throws an exception (`CarrotException`) — call it inside a `try/catch`:
 ```kotlin
-Dashly.getUnreadConversations()
+ try {
+     val unread = Dashly.getUnreadConversations()
+ } catch (e: CarrotException) {
+     // the SDK is not initialized or the user is unavailable
+ }
 ```
-
 You can also subscribe to changes in the list of unread conversation identifiers:
 ```kotlin
-Dashly.setUnreadConversationsCallback(callback)
+ Dashly.setUnreadConversationsCallback(callback)
 ```
 
 ## Chat with Operator
@@ -397,9 +399,9 @@ Dashly.setParentActivityClassName("io.test.MainActivity");
 
 ## Notifications unsubscribe method
 
-There are methods to unsubscribe a particular user from fluff and from all mailings in principle.
+There are methods to unsubscribe a particular user from push notifications and from all campaigns in general.
 
-A method for unsubscribing from push:
+A method for unsubscribing from push notifications:
 
 ```kotlin
 Dashly.pushNotificationsUnsubscribe()
