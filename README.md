@@ -1,6 +1,15 @@
-# Оглавление
+---
+description: "Carrot quest SDK для Android: установка через Gradle, инициализация, авторизация пользователя, чат с оператором и push-уведомления."
+---
 
-* [Carrot quest для Android](#carrot-quest-для-android)
+# Carrot quest для Android
+
+Carrot quest для Android поддерживает API 21 и выше.
+
+Подробная документация по SDK доступна на [developers-sdk.carrotquest.io](https://developers-sdk.carrotquest.io).
+
+## Оглавление
+
 * [Установка](#установка)
 * [Обновление до версии 3.0.0](#обновление)
 * [Инициализация](#инициализация)
@@ -14,13 +23,6 @@
    * [Настройка Huawei Push Kit](#настройка-huawei-push-kit)
    * [Общие настройки уведомлений](#общие-настройки-уведомлений)
    * [Метод отписки от пушей](#метод-отписки-от-пушей)
-
-
-## Carrot quest для Android
-
-Carrot quest для Android поддерживает API 21 и выше.
-
-Подробная документация по SDK доступна на [developers-sdk.carrotquest.io](https://developers-sdk.carrotquest.io).
 
 ## Установка
 На данный момент Carrot quest для Android можно установить с помощью gradle.
@@ -90,7 +92,7 @@ Carrot.setup(this, yourApiKey, object : Carrot.Callback<Boolean> {
 
 ## Инициализация
 Для работы с Carrot quest для Android вам понадобится API Key и User Auth Key. Вы можете найти эти ключи на вкладке Настройки > Разработчикам:
-![Api keys](https://github.com/carrotquest/android-sdk/blob/carrotquest/img/carrot_api_keys.png?raw=true)
+![Личный кабинет Carrot quest, раздел «Разработчикам»: блок API-ключей с полями API Key и User Auth Key](https://github.com/carrotquest/android-sdk/blob/carrotquest/img/carrot_api_keys.png?raw=true)
 
 Для инициализации Carrot quest вам нужно выполнить следующий код в методе onCreate() вашего приложения:
 
@@ -297,12 +299,12 @@ public void setLocationFAB(LocationFAB location)
 Carrot.openChat(context)
 ```
 
-# Уведомления
+## Уведомления
 
 SDK поддерживает два провайдера push-уведомлений - Firebase Cloud Messaging и HUAWEI
 Push Kit.
 
-## Настройка Firebase Cloud Messaging
+### Настройка Firebase Cloud Messaging
 
 В первую очередь необходимо получить ключ и отправить его в Carrot. Вы можете найти
 поле для ввода ключа на вкладке Настройки > Разработчикам > Push-уведомления для SDK.
@@ -331,7 +333,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService () {
     }
 }
 ```
-## Настройка Huawei Push Kit
+
+### Настройка Huawei Push Kit
 
 На устройствах Huawei без Google-сервисов (большинство моделей, выпущенных после 2019 года) FCM не работает. Чтобы доставлять пуши и на них, в дополнение к FCM используется Huawei Push Kit (HPK). SDK сам определит, что устройство Huawei, и подменит канал доставки — со стороны интеграции достаточно пробросить HPK-токен и входящие сообщения теми же методами `Carrot.sendPushToken` / `Carrot.isCarrotPush` / `Carrot.sendPushNotification`.
 
@@ -339,18 +342,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService () {
 
 Настройка состоит из четырёх частей: консоль Huawei → ключи в личном кабинете Carrot quest → подключение HMS в проект → код приложения.
 
-### Шаг 1. Создайте проект в консоли Huawei
+#### Шаг 1. Создайте проект в консоли Huawei
 
 1. Зарегистрируйте аккаунт разработчика на [developer.huawei.com](https://developer.huawei.com/) и пройдите верификацию (подтверждение личности или организации). Без верификации Push Kit включить нельзя; проверка документов может занять несколько дней.
 2. В консоли [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html) создайте проект и добавьте в него Android-приложение. Имя пакета (package name) должно совпадать с `applicationId` вашего приложения.
 3. В настройках приложения укажите SHA-256 отпечаток сертификата подписи — без него HMS не выдаст пуш-токен. Как получить отпечаток: [инструкция Huawei](https://developer.huawei.com/consumer/en/doc/HMSCore-Guides/config-agc-0000001050170137).
 4. Включите Push Kit: в меню проекта слева откройте Рост (Grow) > Push Kit и нажмите «Включить».
 
-### Шаг 2. Скопируйте Client ID и Client Secret
+#### Шаг 2. Скопируйте Client ID и Client Secret
 
 В AppGallery Connect откройте Настройки проекта > Данные приложения (App information) и найдите блок «ID клиента OAuth 2.0». Скопируйте оба значения — `Client ID` и `Client Secret`. Они понадобятся на шаге 4.
 
-### Шаг 3. Настройте уведомление о получении сообщений (вебхук)
+#### Шаг 3. Настройте уведомление о получении сообщений (вебхук)
 
 > **Этот шаг обязателен.** В отличие от FCM, Huawei сообщает о статусе доставки пуша не в ответе на отправку, а асинхронно — вебхуком. Без настроенного вебхука Carrot quest не сможет отслеживать доставку пушей на Huawei-устройства.
 
@@ -370,18 +373,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService () {
 
 4. Нажмите «Тест» — Huawei отправит проверочный запрос на указанный адрес. Если проверка прошла успешно, нажмите «Отправить».
 
-### Шаг 4. Загрузите ключи в Carrot quest
+#### Шаг 4. Загрузите ключи в Carrot quest
 
 В личном кабинете Carrot quest откройте Настройки > Разработчикам > Push-уведомления для SDK и заполните три поля:
 
 * `Client ID` и `Client Secret` — из шага 2;
 * `Webhook Secret` — ключ подтверждения получения, сгенерированный на шаге 3.
 
-![Подключение Huawei Push Kit](https://github.com/carrotquest/android-sdk/blob/carrotquest/img/hpk.png?raw=true)
+![Настройки Carrot quest, форма «Подключение Huawei Push Kit» с полями Client ID, Client Secret и Webhook Secret](https://github.com/carrotquest/android-sdk/blob/carrotquest/img/hpk.png?raw=true)
 
 Не забудьте нажать «Сохранить».
 
-### Шаг 5. Подключите HMS в проект
+#### Шаг 5. Подключите HMS в проект
 
 1. В AppGallery Connect на странице Настройки проекта > Данные приложения скачайте файл `agconnect-services.json` и положите его в каталог модуля приложения (рядом с `build.gradle` модуля `app`).
 2. Добавьте репозиторий Huawei и плагин AppGallery Connect. В `build.gradle` уровня проекта:
@@ -413,7 +416,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService () {
 
 Вместо `latestVersion` подставьте актуальные версии плагина и Push Kit — их можно посмотреть в [официальной инструкции по интеграции HMS](https://developer.huawei.com/consumer/en/doc/HMSCore-Guides/service-introduction-0000001050040060).
 
-### Шаг 6. Передача токена и обработка push
+#### Шаг 6. Передача токена и обработка push
 
 Создайте сервис, унаследованный от `HmsMessageService`, и пробросьте в SDK токен и входящие сообщения:
 
@@ -452,12 +455,13 @@ class MyHuaweiPushKitService : HmsMessageService() {
 </service>
 ```
 
-### Как проверить
+#### Как проверить
 
 1. Соберите приложение и запустите его на реальном Huawei-устройстве (на нём должен быть установлен HMS Core — на устройствах без Google-сервисов он есть из коробки).
 2. Убедитесь, что в `onNewToken` вашего `HmsMessageService` пришёл токен и он передан в `Carrot.sendPushToken` (например, добавьте лог).
 3. Сверните приложение и отправьте пользователю ручное сообщение из кабинета Carrot quest с включённым чекбоксом «Отправить push-уведомление» — на устройство должен прийти пуш.
-## Общие настройки уведомлений
+
+### Общие настройки уведомлений
 
 Иконку и цвет уведомлений о новых сообщениях можно изменить. Для установки иконки на
 уведомления вызовете следующий метод после инициализации SDK:
@@ -502,7 +506,7 @@ registerReceiver(messageReceiver, filter);
 Carrot.setParentActivityClassName("io.test.MainActivity");
 ```
 
-## Метод отписки от пушей
+### Метод отписки от пушей
 
 Существуют методы отписать конкретного пользователя от пушей и от всех рассылок в принципе. 
 
