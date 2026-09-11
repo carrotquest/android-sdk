@@ -1,6 +1,15 @@
-# Table of Contents
+---
+description: "Dashly SDK for Android: installation via Gradle, initialization, user authentication, chat with an operator and push notifications."
+---
 
-* [Dashly for Android](#dashly-for-android)
+# Dashly for Android
+
+Dashly for Android supports API 21 and above.
+
+Detailed SDK documentation is available at [developers.dashly.io](https://developers.dashly.io).
+
+## Table of Contents
+
 * [Installation](#installation)
 * [Upgrade to Version 3.0.0](#upgrade)
 * [Initialization](#initialization)
@@ -14,13 +23,6 @@
   * [Huawei Push Kit Setup](#huawei-push-kit-setup)
   * [General Notification Settings](#general-notification-settings)
   * [Notifications unsubscribe method](#notifications-unsubscribe-method)
-
-
-## Dashly for Android
-
-Dashly for Android supports API 21 and above.
-
-Detailed SDK documentation is available at [developers.dashly.io](https://developers.dashly.io).
 
 ## Installation
 Currently, Dashly for Android can be installed using gradle.
@@ -89,7 +91,7 @@ Dashly.setup(this, yourApiKey, object : Dashly.Callback<Boolean> {
 
 ## Initialization
 To use Dashly for Android, you need the API Key and User Auth Key. You can find these keys in the Settings > Developers tab:
-![Api keys](https://github.com/carrotquest/android-sdk/blob/dashly/img/dashly_api_keys.png?raw=true)
+![Dashly admin panel, Developers tab: the API keys block with the API Key and User Auth Key fields](https://github.com/carrotquest/android-sdk/blob/dashly/img/dashly_api_keys.png?raw=true)
 
 To initialize Dashly, you need to execute the following code in your application's onCreate() method:
 
@@ -295,11 +297,11 @@ You can also open the chat by executing the following code from any location (po
 Dashly.openChat(context)
 ```
 
-# Notifications
+## Notifications
 
 The SDK supports two push notification providers - Firebase Cloud Messaging and Huawei Push Kit.
 
-## Firebase Cloud Messaging Setup
+### Firebase Cloud Messaging Setup
 
 First, you need to obtain a key and send it to Dashly. You can find the field for entering the key in Settings > Developers > Push notifications for SDK. The setup process for Firebase Cloud Messaging is described here.
 
@@ -324,7 +326,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 }
 ```
 
-## Huawei Push Kit Setup
+### Huawei Push Kit Setup
 
 To deliver notifications to users with devices without Google services, you can use Huawei's push notification delivery service. First, you need to integrate HPK into your application. Instructions can be found here. Then, in Settings > Developers > Push notifications for SDK, you need to provide the Client ID, Client Secret, and Webhook Secret. Next, modify the service inherited from HmsMessageService. Example:
 
@@ -351,7 +353,7 @@ class MyHuaweiPushKitService : HmsMessageService() {
 }
 ```
 
-## General Notification Settings
+### General Notification Settings
 
 You can change the icon and color of notifications for new messages. To set the icon for notifications, call the following method after initializing the SDK:
 
@@ -397,7 +399,7 @@ Important! If the application is closed and the user opens the chat by clicking 
 Dashly.setParentActivityClassName("io.test.MainActivity");
 ```
 
-## Notifications unsubscribe method
+### Notifications unsubscribe method
 
 There are methods to unsubscribe a particular user from push notifications and from all campaigns in general.
 
